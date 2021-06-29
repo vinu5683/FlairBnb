@@ -14,7 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="backdrop"
         app:titleTextColor="@color/black"
-
         />
 
     <com.roacult.backdrop.BackdropLayout

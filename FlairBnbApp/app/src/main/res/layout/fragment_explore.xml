@@ -13,20 +13,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:title="backdrop"
-            app:titleTextColor="@color/black"
-
-            />
+            app:titleTextColor="@color/black" />
 
         <com.roacult.backdrop.BackdropLayout
             android:id="@+id/searchBackDropContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:back_layout="@id/includedBack"
             app:closeDrawable="@drawable/ic_close"
             app:front_layout="@id/includedFront"
@@ -43,6 +40,13 @@
                 layout="@layout/search_result_front_layer" />
 
         </com.roacult.backdrop.BackdropLayout>
+
+        <Button
+            android:id="@+id/btnHost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Host A Store" />
     </LinearLayout>
 
 

@@ -5,16 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.masai.flairbnbapp.R
+import com.masai.flairbnbapp.models.RoomModel
 import com.roacult.backdrop.BackdropLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ExploreFragment : Fragment() {
 
-    lateinit var front_layout:View;
-    lateinit var back_layout:View;
+    lateinit var front_layout: View;
+    lateinit var back_layout: View;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +32,19 @@ class ExploreFragment : Fragment() {
 
         val backdropLayout = view.findViewById<BackdropLayout>(R.id.searchBackDropContainer)
 
-        back_layout  = backdropLayout.getChildAt(0)
-        front_layout  = backdropLayout.getChildAt(1)
-
-
+        back_layout = backdropLayout.getChildAt(0)
+        front_layout = backdropLayout.getChildAt(1)
         MainActivity.navToggleInterface.setNavigation(true)
+        val navController = Navigation.findNavController(view)
+
+
+        view.findViewById<Button>(R.id.btnHost).setOnClickListener {
+            navController.navigate(R.id.action_exploreFragment_to_hostPart1Fragment)
+        }
 
     }
+
+
 
 }
 

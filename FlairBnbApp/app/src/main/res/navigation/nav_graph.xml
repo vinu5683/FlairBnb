@@ -61,7 +61,11 @@
         android:id="@+id/exploreFragment"
         android:name="com.masai.flairbnbapp.ui.ExploreFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_hostPart1Fragment"
+            app:destination="@id/hostPart1Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.masai.flairbnbapp.ui.ProfileFragment"
@@ -82,4 +86,9 @@
         android:name="com.masai.flairbnbapp.ui.InboxFragment"
         android:label="fragment_inbox"
         tools:layout="@layout/fragment_inbox" />
+    <fragment
+        android:id="@+id/hostPart1Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart1Fragment"
+        android:label="fragment_host_part1"
+        tools:layout="@layout/fragment_host_part1" />
 </navigation>
