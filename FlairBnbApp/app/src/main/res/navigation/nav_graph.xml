@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.masai.flairbnbapp.ui.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.masai.flairbnbapp.ui.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_confirmOTPFragment"
+            app:destination="@id/confirmOTPFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmOTPFragment"
+        android:name="com.masai.flairbnbapp.ui.ConfirmOTPFragment"
+        android:label="fragment_confirm_o_t_p"
+        tools:layout="@layout/fragment_confirm_o_t_p" >
+        <action
+            android:id="@+id/action_confirmOTPFragment_to_addInfoFragment"
+            app:destination="@id/addInfoFragment" />
+        <action
+            android:id="@+id/action_confirmOTPFragment_to_exploreFragment2"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addInfoFragment"
+        android:name="com.masai.flairbnbapp.ui.AddInfoFragment"
+        android:label="fragment_add_info"
+        tools:layout="@layout/fragment_add_info" >
+        <action
+            android:id="@+id/action_addInfoFragment_to_termsAndConditionsFragment"
+            app:destination="@id/termsAndConditionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsAndConditionsFragment"
+        android:name="com.masai.flairbnbapp.ui.TermsAndConditionsFragment"
+        android:label="fragment_terms_and_conditions"
+        tools:layout="@layout/fragment_terms_and_conditions" >
+        <action
+            android:id="@+id/action_termsAndConditionsFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.masai.flairbnbapp.ui.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.masai.flairbnbapp.ui.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/tripsFragment"
+        android:name="com.masai.flairbnbapp.ui.TripsFragment"
+        android:label="fragment_trips"
+        tools:layout="@layout/fragment_trips" />
+    <fragment
+        android:id="@+id/wishlistsFragment"
+        android:name="com.masai.flairbnbapp.ui.WishlistsFragment"
+        android:label="fragment_wishlists"
+        tools:layout="@layout/fragment_wishlists" />
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.masai.flairbnbapp.ui.InboxFragment"
+        android:label="fragment_inbox"
+        tools:layout="@layout/fragment_inbox" />
+</navigation>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SearchResultFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="backdrop"
+        app:titleTextColor="@color/black"
+
+        />
+
+    <com.roacult.backdrop.BackdropLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:back_layout="@id/includedBack"
+        app:closeDrawable="@drawable/ic_close"
+        app:front_layout="@id/includedFront"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:menuDrawable="@drawable/ic_menu"
+        app:peekHeight="56dp"
+        app:toolbarId="@id/toolbar">
+
+        <include
+            android:id="@+id/includedBack"
+            layout="@layout/search_result_back_layer" />
+
+        <include
+            android:id="@+id/includedFront"
+            layout="@layout/search_result_front_layer" />
+
+    </com.roacult.backdrop.BackdropLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+
+{
+  "project_info": {
+    "project_number": "613708307458",
+    "project_id": "flairbnbapp",
+    "storage_bucket": "flairbnbapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613708307458:android:c51a4627e49b4171001b1b",
+        "android_client_info": {
+          "package_name": "com.masai.flairbnbapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613708307458-hscbjpm11ppiactqvk59cjko0oskmuut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.masai.flairbnbapp",
+            "certificate_hash": "8d65201670f6c9f83977a060fcfee82d5c9bdfca"
+          }
+        },
+        {
+          "client_id": "613708307458-l4p6ltnlpnanf6vbnpa25n2vqdg7qoul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS9fHNl7U6hynCvKzq4RoGOvLahXQuEo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613708307458-l4p6ltnlpnanf6vbnpa25n2vqdg7qoul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
