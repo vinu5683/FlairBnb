@@ -116,6 +116,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             description = "",
             category = "",
             subCategory = "",
+            roomSpaceType = "",
             price = 0,
             priceForWhat = "",
             image_blob_id = "",

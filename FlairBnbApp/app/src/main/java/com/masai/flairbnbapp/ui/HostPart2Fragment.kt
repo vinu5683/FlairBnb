@@ -54,7 +54,6 @@ class HostPart2Fragment : Fragment() {
         boutique.setBackgroundResource(R.drawable.roundrectangle_gray)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -117,7 +116,6 @@ class HostPart2Fragment : Fragment() {
             roomModel?.category = "Secondary unit"
             secondary.setBackgroundResource(R.drawable.roundrectangle_black)
         }
-        
     }
 
     override fun onResume() {

@@ -1,5 +1,7 @@
 package com.masai.flairbnbapp.localdatabases;
 
+import com.masai.flairbnbapp.R;
+import com.masai.flairbnbapp.models.ServiceListModel;
 import com.masai.flairbnbapp.models.SubCategoryModel;
 
 import java.util.ArrayList;
@@ -176,6 +178,65 @@ public class LocalKeys {
                 "Pension",
                 "A house with a barbecue and communal space in the countryside of Korea.",
                 false));
+        return list;
+    }
+
+    public static ArrayList<ServiceListModel> getServiceList() {
+        ArrayList<ServiceListModel> list = new ArrayList<>();
+        list.add(new ServiceListModel(
+                "Pool", R.drawable.ic_pool, false
+        ));
+        list.add(new ServiceListModel(
+                "Hot tub", R.drawable.ic_hottub, false
+        ));
+        list.add(new ServiceListModel(
+                "Patio", R.drawable.ic_patio, false
+        ));
+        list.add(new ServiceListModel(
+                "BBQ grill", R.drawable.ic_bbq_grill, false
+        ));
+        list.add(new ServiceListModel(
+                "Fire pit", R.drawable.ic_firepit, false
+        ));
+        list.add(new ServiceListModel(
+                "Dining", R.drawable.ic_dining, false
+        ));
+        list.add(new ServiceListModel(
+                "Exercise", R.drawable.ic_exercise, false
+        ));
+        list.add(new ServiceListModel(
+                "Wifi", R.drawable.ic_wifi, false
+        ));
+        list.add(new ServiceListModel(
+                "TV", R.drawable.ic_tv, false
+        ));
+        list.add(new ServiceListModel(
+                "Kitchen", R.drawable.ic_kitchen, false
+        ));
+        list.add(new ServiceListModel(
+                "Washing machine", R.drawable.ic_washingmachine, false
+        ));
+        list.add(new ServiceListModel(
+                "Parking", R.drawable.ic_parking, false
+        ));
+        list.add(new ServiceListModel(
+                "Air conditions", R.drawable.ic_ac, false
+        ));
+        list.add(new ServiceListModel(
+                "Shower", R.drawable.ic_shower, false
+        ));
+        list.add(new ServiceListModel(
+                "First aid kit", R.drawable.ic_firstaidkit, false
+        ));
+        list.add(new ServiceListModel(
+                "Smoke alarm", R.drawable.ic_smokealarm, false
+        ));
+        list.add(new ServiceListModel(
+                "Fire extinguisher", R.drawable.ic_fireextinguisher, false
+        ));
+        list.add(new ServiceListModel(
+                "Room lock", R.drawable.ic_roomlock, false
+        ));
         return list;
     }
 }
