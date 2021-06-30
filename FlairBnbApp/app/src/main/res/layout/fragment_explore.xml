@@ -42,7 +42,7 @@
         </com.roacult.backdrop.BackdropLayout>
 
         <Button
-            android:id="@+id/btnHost"
+            android:id="@+id/btnNext2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"

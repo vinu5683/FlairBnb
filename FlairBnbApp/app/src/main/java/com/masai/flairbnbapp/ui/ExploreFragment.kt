@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.masai.flairbnbapp.R
-import com.masai.flairbnbapp.models.RoomModel
 import com.roacult.backdrop.BackdropLayout
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +36,7 @@ class ExploreFragment : Fragment() {
         val navController = Navigation.findNavController(view)
 
 
-        view.findViewById<Button>(R.id.btnHost).setOnClickListener {
+        view.findViewById<Button>(R.id.btnNext2).setOnClickListener {
             navController.navigate(R.id.action_exploreFragment_to_hostPart1Fragment)
         }
 

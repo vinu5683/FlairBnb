@@ -16,7 +16,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchEditText"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
@@ -24,6 +24,7 @@
         app:boxStrokeColor="?attr/colorPrimary"
         app:boxStrokeWidth="1dp"
         app:hintTextColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -33,11 +34,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnHost"
+        android:id="@+id/btnNext2"
+        android:background="@drawable/background_animation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:text="Host A Place"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

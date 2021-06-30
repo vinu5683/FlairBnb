@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="40dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="40dp"
+    android:background="@drawable/roundrectangle_gray"
+    android:minHeight="?attr/minTouchTargetSize"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:maxLines="1"
+        android:paddingStart="16sp"
+        android:text="TITLE"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/subtasditle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:maxLines="1"
+        android:paddingStart="16sp"
+        android:text="Sub Title"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textSize="14dp" />
+
+
+</LinearLayout>

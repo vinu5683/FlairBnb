@@ -11,10 +11,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,6 +33,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.masai.flairbnbapp.R
 import com.masai.flairbnbapp.models.RoomModel
+import com.masai.flairbnbapp.viewmodels.HostPlaceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_host_part1.*
 import java.util.*
@@ -39,12 +45,13 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
     private var location: String = "123"
 
+    private val placeViewModel by viewModels<HostPlaceViewModel>()
+
     private var map: GoogleMap? = null
     private var cameraPosition: CameraPosition? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
     private var locationPermissionGranted = false
-    private val options = MarkerOptions()
 
 
     override fun onCreateView(
@@ -59,12 +66,8 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //// Get input text
-        //val inputText = outlinedTextField.editText?.text.toString()
-        //
-        //outlinedTextField.editText?.doOnTextChanged { inputText, _, _, _ ->
-        //    // Respond to input text change
-        //}
+
+        val navController = Navigation.findNavController(view)
         getLocationPermission()
         if (savedInstanceState != null) {
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION)
@@ -76,7 +79,19 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
         mapFragment?.getMapAsync(this)
         showCurrentPlace()
 
+        view.findViewById<Button>(R.id.btnNext2).setOnClickListener {
+            if (location != "123" && location != "") {
+                placeViewModel.setRoomObject(roomModel)
+                navController.navigate(R.id.action_hostPart1Fragment_to_hostPart2Fragment)
+                Log.d("TAG", "SetRoomObject Done" + roomModel.toString())
+            } else {
+                Toast.makeText(view.context, "Please Select the Location", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
     }
+
 
     private fun getLocationPermission() {
         if (ContextCompat.checkSelfPermission(
@@ -100,6 +115,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             title = "",
             description = "",
             category = "",
+            subCategory = "",
             price = 0,
             priceForWhat = "",
             image_blob_id = "",
@@ -157,13 +173,11 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
                 geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
             if (addresses.isNotEmpty()) {
 
+                searchEditText.editText?.setText(addresses[0].locality.toString() + "\n" + addresses[0].adminArea.toString() + "\n" + addresses[0].countryName.toString())
             }
-            searchEditText.editText?.setText(addresses[0].locality.toString() + "\n" + addresses[0].adminArea.toString() + "\n" + addresses[0].countryName.toString())
-
         })
 
         updateLocationUI()
-
         // Get the current location of the device and set the position of the map.
         getDeviceLocation()
     }
