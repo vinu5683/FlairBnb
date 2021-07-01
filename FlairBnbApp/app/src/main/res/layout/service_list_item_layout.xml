@@ -4,6 +4,7 @@
     android:id="@+id/serviceItemParent"
     android:background="@drawable/roundrectangle_gray"
     android:layout_margin="20dp"
+    android:foreground="@drawable/ripple_effect"
     android:layout_height="wrap_content">
 
     <LinearLayout

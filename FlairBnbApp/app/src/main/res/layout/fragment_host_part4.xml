@@ -51,6 +51,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="16dp">
 
@@ -78,6 +79,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="16dp">
 
@@ -105,6 +107,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="16dp">
 

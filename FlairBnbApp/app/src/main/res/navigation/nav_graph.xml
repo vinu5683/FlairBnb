@@ -134,5 +134,14 @@
         android:id="@+id/hostPart6Fragment"
         android:name="com.masai.flairbnbapp.ui.HostPart6Fragment"
         android:label="fragment_host_part6"
-        tools:layout="@layout/fragment_host_part6" />
+        tools:layout="@layout/fragment_host_part6" >
+        <action
+            android:id="@+id/action_hostPart6Fragment_to_hostPart7Fragment"
+            app:destination="@id/hostPart7Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart7Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart7Fragment"
+        android:label="fragment_host_part7"
+        tools:layout="@layout/fragment_host_part7" />
 </navigation>

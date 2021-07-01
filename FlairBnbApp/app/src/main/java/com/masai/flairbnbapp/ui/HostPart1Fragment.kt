@@ -92,7 +92,6 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
     }
 
-
     private fun getLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 activity?.applicationContext!!,
@@ -111,7 +110,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
     private fun initModel(): RoomModel {
         return RoomModel(
-            id = "",
+            id = System.currentTimeMillis().toString() + (Math.random() * 2231).toInt().toString(),
             title = "",
             description = "",
             category = "",
@@ -119,7 +118,6 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             roomSpaceType = "",
             price = 0,
             priceForWhat = "",
-            image_blob_id = "",
             location_lat = "",
             location_long = "",
             host_id = "",

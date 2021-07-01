@@ -39,6 +39,7 @@ class HostPart5Fragment : Fragment(), ServiceListInterface {
     lateinit var slider_bathroom: Slider
     lateinit var slider_beds: Slider
     lateinit var slider_guest: Slider
+    lateinit var slider_rooms: Slider
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +66,7 @@ class HostPart5Fragment : Fragment(), ServiceListInterface {
             roomModel.beds = slider_beds.value.toInt()
             roomModel.total_bathrooms = slider_bathroom.value.toInt()
             roomModel.total_capacity = slider_guest.value.toInt()
+            roomModel.rooms = slider_guest.value.toInt()
 
             pvm.setRoomObject(roomModel)
             pvm.setServices(list)

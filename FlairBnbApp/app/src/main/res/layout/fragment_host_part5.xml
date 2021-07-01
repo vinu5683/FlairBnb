@@ -44,6 +44,36 @@
                 android:paddingBottom="30dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="Rooms"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_rooms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Number Of Beds"
+                        android:stepSize="1.0"
+                        android:value="1"
+                        android:valueFrom="0"
+                        android:valueTo="12" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ll_guests"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

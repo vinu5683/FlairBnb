@@ -5,6 +5,7 @@
     android:layout_marginStart="40dp"
     android:layout_marginTop="20dp"
     android:layout_marginEnd="40dp"
+    android:foreground="@drawable/ripple_effect"
     android:background="@drawable/roundrectangle_gray"
     android:minHeight="?attr/minTouchTargetSize"
     android:orientation="vertical"

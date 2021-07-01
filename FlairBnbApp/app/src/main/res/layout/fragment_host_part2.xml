@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_animation"
+    android:foreground="@drawable/ripple_effect"
     tools:context=".ui.HostPart1Fragment">
 
     <TextView
@@ -47,6 +48,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="6dp">
 
@@ -79,6 +81,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="6dp">
 
@@ -111,6 +114,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="6dp">
 
@@ -143,6 +147,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="6dp">
 
@@ -175,6 +180,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="6dp">
 
@@ -207,6 +213,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
                     android:minHeight="?attr/minTouchTargetSize"
                     android:padding="6dp">
 
@@ -242,7 +249,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
         android:text="Next"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
