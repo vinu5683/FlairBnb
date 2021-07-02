@@ -40,13 +40,10 @@ class HostPart6Fragment : Fragment() {
 
     private val imageList = ArrayList<Uri>()
     private val downloadImageList = ArrayList<Uri>()
-    var unique = System.currentTimeMillis().toString()
-    private var app: FirebaseApp? = null
-    private var storage: FirebaseStorage? = null
-    val adapter = ImageListingAdapter(downloadImageList)
+
+    val adapter = ImageListingAdapter(imageList)
 
     private lateinit var rvPart6: RecyclerView
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,8 +61,7 @@ class HostPart6Fragment : Fragment() {
 
         initRecyclerview(view)
 
-        app = FirebaseApp.getInstance();
-        storage = FirebaseStorage.getInstance(app!!);
+
 
         val constraintLayout = view.findViewById<ConstraintLayout>(R.id.part6Container)
         anim = constraintLayout.background as AnimationDrawable
@@ -80,6 +76,7 @@ class HostPart6Fragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.btnNext7).setOnClickListener {
+            pvm.imageList = imageList
             navController.navigate(R.id.action_hostPart6Fragment_to_hostPart7Fragment)
         }
 
@@ -105,9 +102,6 @@ class HostPart6Fragment : Fragment() {
                         imageList.add(ImageUri)
                         currentImageSlect += 1
                     }
-                    if (imageList.size != 0) {
-                        uploadImages()
-                    }
                 } else {
                     Toast.makeText(
                         view?.context,
@@ -118,52 +112,16 @@ class HostPart6Fragment : Fragment() {
             }
         }
     }
-
-    private fun uploadImages() {
-        downloadImageList.clear()
-        for (i in 0 until imageList.size) {
-            val uri: Uri = imageList[i]
-
-            uploadTask(uri, roomModel.id)
-        }
+    override fun onResume() {
+        super.onResume()
+        if (anim != null && !anim!!.isRunning) anim!!.start()
     }
 
-    private fun uploadTask(uri: Uri, shopId: String?) {
-        val storageReference = FirebaseStorage.getInstance().getReference("placepics").child(shopId!!)
-            .child(UUID.randomUUID().toString() + getFileExt(uri))
-        Log.d("TAG", "uploadTask: ongoinig")
-        storageReference
-            .putFile(uri)
-            .continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    throw task.exception!!
-                }
-                Log.d("TAG", "uploadTask: " + storageReference.downloadUrl)
-                storageReference.downloadUrl
-            }.addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val downloadUri = it.result
-                    downloadImageList.add(downloadUri)
-                    adapter.notifyDataSetChanged()
-                    uploadToRealTimeDatabase(downloadUri)
-                }
-            }
+    override fun onPause() {
+        super.onPause()
+        if (anim != null && anim!!.isRunning) anim!!.stop()
     }
 
-    private fun uploadToRealTimeDatabase(uri: Uri) {
-        val ref = FirebaseDatabase.getInstance().getReference("places")
-            .child(roomModel.id!!)
-        unique = (System.currentTimeMillis() + (Math.random() * 257).toInt()).toString()
-        ref.child("Images").child(unique).setValue(uri.toString()).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("TAG", "uploadToRealTimeDatabase: Success")
-            } else Log.d("TAG", "uploadToRealTimeDatabase: Failed")
-        }
-    }
 
-    private fun getFileExt(uri: Uri): String? {
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(activity?.contentResolver?.getType(uri))
-    }
 
 }

@@ -1,5 +1,6 @@
 package com.masai.flairbnbapp.viewmodels
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.ServiceListModel
@@ -9,12 +10,15 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 @HiltViewModel
-class HostPlaceViewModel @Inject constructor(
+class HostPlaceViewModel @Inject public constructor(
     val repository: FlairRepository
 ) : ViewModel() {
+    var imageList = ArrayList<Uri>()
     val placesList = repository.roomsModelList
     val roomModel = repository.roomModel
     var serviceList = repository.roomServiceList
+
+
     fun addPlace(roomModel: RoomModel) {
         repository.addPlace(roomModel)
     }

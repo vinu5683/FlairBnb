@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_loginFragment_to_confirmOTPFragment"
             app:destination="@id/confirmOTPFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_addInfoFragment"
+            app:destination="@id/addInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmOTPFragment"
@@ -143,5 +146,14 @@
         android:id="@+id/hostPart7Fragment"
         android:name="com.masai.flairbnbapp.ui.HostPart7Fragment"
         android:label="fragment_host_part7"
-        tools:layout="@layout/fragment_host_part7" />
+        tools:layout="@layout/fragment_host_part7" >
+        <action
+            android:id="@+id/action_hostPart7Fragment_to_myHostPlacesFragment"
+            app:destination="@id/myHostPlacesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myHostPlacesFragment"
+        android:name="com.masai.flairbnbapp.ui.MyHostPlacesFragment"
+        android:label="fragment_my_host_places"
+        tools:layout="@layout/fragment_my_host_places" />
 </navigation>

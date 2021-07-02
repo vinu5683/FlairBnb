@@ -167,13 +167,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
             // Placing a marker on the touched position
             map?.addMarker(markerOptions)
-            val geoCoder = Geocoder(this.context, Locale.getDefault())
-            val addresses: List<Address> =
-                geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            if (addresses.isNotEmpty()) {
 
-                searchEditText.editText?.setText(addresses[0].locality.toString() + "\n" + addresses[0].adminArea.toString() + "\n" + addresses[0].countryName.toString())
-            }
         })
 
         updateLocationUI()

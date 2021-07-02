@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 public class LocalKeys {
 
-    public static final String KEY_IS_USER_LOGGED_IN = "DOES_USER_LOGGED_IN";
-    public static final String KEY_USER_GOOGLE_ID = "GOOGLE_USER_ID";
+    public static final String KEY_IS_USER_LOGGED_IN = "DOES_USER_LOGGED_IN_1";
+    public static final String KEY_USER_GOOGLE_ID = "GOOGLE_USER_ID_1";
+    public static final String KEY_USER_LOGIN_TYPE = "KEYS_LOGIN_TYPE_USER";
 
     public static ArrayList<SubCategoryModel> getHouseSubCategoryList() {
         ArrayList<SubCategoryModel> list = new ArrayList<SubCategoryModel>();
@@ -238,5 +239,30 @@ public class LocalKeys {
                 "Room lock", R.drawable.ic_roomlock, false
         ));
         return list;
+    }
+
+    public static void main(String[] args) {
+//        class Node {
+//            int data;
+//            Node next;
+//        }
+//
+//        Node head;
+//        int k = 2;
+//        Node cur = head;
+//        Node breaker = cur;
+//        int i = 0;
+//        while (cur != null) {
+//            if (i > k) {
+//                breaker = breaker.next;
+//            }
+//            cur = cur.next;
+//            i++;
+//
+//        }
+//        cur.next = head;
+//        head = breaker.next;
+//        breaker.next = null
+
     }
 }
