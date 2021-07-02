@@ -37,11 +37,10 @@ class HostPart6Fragment : Fragment() {
     var anim: AnimationDrawable? = null
     lateinit var roomModel: RoomModel
 
-
     private val imageList = ArrayList<Uri>()
     private val downloadImageList = ArrayList<Uri>()
 
-    val adapter = ImageListingAdapter(imageList)
+    var adapter = ImageListingAdapter(imageList)
 
     private lateinit var rvPart6: RecyclerView
 
@@ -60,7 +59,6 @@ class HostPart6Fragment : Fragment() {
         roomModel = pvm.getTheRoomModel()
 
         initRecyclerview(view)
-
 
 
         val constraintLayout = view.findViewById<ConstraintLayout>(R.id.part6Container)
@@ -93,15 +91,16 @@ class HostPart6Fragment : Fragment() {
         if (requestCode == 20) {
             if (resultCode == AppCompatActivity.RESULT_OK) {
                 if (data?.clipData != null) {
-
                     imageList.clear()
                     val countClipData = data.clipData!!.itemCount
                     var currentImageSlect = 0
                     while (currentImageSlect < countClipData) {
                         val ImageUri: Uri = data.clipData!!.getItemAt(currentImageSlect).uri
                         imageList.add(ImageUri)
+                        Log.d("TAG", "onActivityResult: " + ImageUri.toString())
                         currentImageSlect += 1
                     }
+                    updateRecyclerView()
                 } else {
                     Toast.makeText(
                         view?.context,
@@ -112,6 +111,14 @@ class HostPart6Fragment : Fragment() {
             }
         }
     }
+
+    private fun updateRecyclerView() {
+        pvm.setImageListObject(imageList)
+        adapter = ImageListingAdapter(imageList)
+        rvPart6.adapter = adapter
+        adapter.notifyDataSetChanged()
+    }
+
     override fun onResume() {
         super.onResume()
         if (anim != null && !anim!!.isRunning) anim!!.start()
@@ -121,7 +128,6 @@ class HostPart6Fragment : Fragment() {
         super.onPause()
         if (anim != null && anim!!.isRunning) anim!!.stop()
     }
-
 
 
 }

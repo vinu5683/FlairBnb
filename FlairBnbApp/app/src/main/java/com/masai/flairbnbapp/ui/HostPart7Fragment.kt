@@ -93,7 +93,7 @@ class HostPart7Fragment : Fragment() {
         navController = Navigation.findNavController(view)
         initViews(view)
         roomModel = pvm.roomModel!!
-
+        imageList = pvm.imageList
         setViews(view)
 
         val constraintLayout = view.findViewById<ConstraintLayout>(R.id.part7Container)
@@ -106,7 +106,7 @@ class HostPart7Fragment : Fragment() {
         imageList = pvm.imageList
 
         view.findViewById<Button>(R.id.btnDone).setOnClickListener {
-
+            pvm.setSaveDone(false)
             roomModel.city = etPlaceCity.editText?.text.toString()
             roomModel.state = etPlaceState.editText?.text.toString()
             roomModel.country = etPlaceState.editText?.text.toString()
@@ -122,10 +122,12 @@ class HostPart7Fragment : Fragment() {
             part6Card.visibility = View.GONE
             rtyhgt.text = "Please wait..."
             progressbar.visibility = View.VISIBLE
-
             pvm.addPlace(roomModel)
-            uploadImages()
-
+            pvm.isSaveDone.observe(viewLifecycleOwner, {
+                if (it) {
+                    navController.navigate(R.id.action_hostPart7Fragment_to_myHostPlacesFragment)
+                }
+            })
         }
     }
 
@@ -142,57 +144,6 @@ class HostPart7Fragment : Fragment() {
             etPlaceState.editText?.setText(addresses[0].adminArea.toString() ?: "")
             etPlaceCountry.editText?.setText(addresses[0].countryName.toString() ?: "")
         }
-    }
-
-
-    private fun uploadImages() {
-        downloadImageList.clear()
-        for (i in 0 until imageList.size) {
-            val uri: Uri = imageList[i]
-            uploadTask(uri, roomModel.id)
-        }
-        uploadToRealTimeDatabase(downloadImageList)
-    }
-
-    private fun uploadTask(uri: Uri, shopId: String?) {
-        val storageReference =
-            FirebaseStorage.getInstance().getReference("placepics").child(shopId!!)
-                .child(UUID.randomUUID().toString() + getFileExt(uri))
-        Log.d("TAG", "uploadTask: ongoinig")
-        storageReference
-            .putFile(uri)
-            .continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    throw task.exception!!
-                }
-                Log.d("TAG", "uploadTask: " + storageReference.downloadUrl)
-                storageReference.downloadUrl
-            }.addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val downloadUri = it.result
-                    downloadImageList.add(downloadUri)
-//                    uploadToRealTimeDatabase(downloadUri)
-                }
-            }
-    }
-
-    private fun uploadToRealTimeDatabase(uri: ArrayList<Uri>) {
-        val ref = FirebaseDatabase.getInstance().getReference("places")
-            .child(roomModel.id!!)
-        unique = (System.currentTimeMillis() + (Math.random() * 257).toInt()).toString()
-        ref.child("Images").child(unique).setValue(uri.toString()).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("TAG", "uploadToRealTimeDatabase: Success")
-                Handler().postDelayed({
-                    navController.navigate(R.id.action_hostPart7Fragment_to_myHostPlacesFragment)
-                }, 1000)
-            } else Log.d("TAG", "uploadToRealTimeDatabase: Failed")
-        }
-    }
-
-    private fun getFileExt(uri: Uri): String? {
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(activity?.contentResolver?.getType(uri))
     }
 
 

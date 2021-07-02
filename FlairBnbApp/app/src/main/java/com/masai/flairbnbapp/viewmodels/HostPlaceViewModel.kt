@@ -1,6 +1,7 @@
 package com.masai.flairbnbapp.viewmodels
 
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.ServiceListModel
@@ -13,7 +14,10 @@ import javax.inject.Inject
 class HostPlaceViewModel @Inject public constructor(
     val repository: FlairRepository
 ) : ViewModel() {
-    var imageList = ArrayList<Uri>()
+
+    var isSaveDone: MutableLiveData<Boolean> = repository.isSaveDone
+
+    var imageList = repository.imageList
     val placesList = repository.roomsModelList
     val roomModel = repository.roomModel
     var serviceList = repository.roomServiceList
@@ -23,8 +27,16 @@ class HostPlaceViewModel @Inject public constructor(
         repository.addPlace(roomModel)
     }
 
+    fun setSaveDone(b: Boolean) {
+        repository.setSaveDone(false)
+    }
+
     fun setRoomObject(roomModel: RoomModel) {
         repository.setRoomObject(roomModel)
+    }
+
+    fun setImageListObject(imageList: ArrayList<Uri>) {
+        repository.setImageListObject(imageList)
     }
 
     fun getTheRoomModel(): RoomModel {
@@ -38,7 +50,7 @@ class HostPlaceViewModel @Inject public constructor(
                 l.add(list[i].title)
             }
         }
-        serviceList = l
+        repository.setServiceList(l)
 
     }
 }
