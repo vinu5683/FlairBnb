@@ -43,15 +43,12 @@ class HostPart7Fragment : Fragment() {
     var anim: AnimationDrawable? = null
     lateinit var roomModel: RoomModel
 
-    private val downloadImageList = ArrayList<Uri>()
-    var unique = System.currentTimeMillis().toString()
     private var app: FirebaseApp? = null
     private var storage: FirebaseStorage? = null
     private var imageList = ArrayList<Uri>()
 
     lateinit var navController: NavController
 
-    //views
     lateinit var etPlaceName: TextInputLayout
     lateinit var etPlaceDescription: TextInputLayout
     lateinit var etPlacePrice: TextInputLayout
@@ -82,7 +79,6 @@ class HostPart7Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_host_part7, container, false)
     }
 
@@ -114,7 +110,6 @@ class HostPart7Fragment : Fragment() {
             roomModel.title = etPlaceName.editText?.text.toString()
             roomModel.description = etPlaceDescription.editText?.text.toString()
             roomModel.host_id = "room model"
-//                PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_GOOGLE_ID)
             roomModel.price = etPlacePrice.editText?.text.toString().toLong()
             roomModel.priceForWhat = "Night stay"
             pvm.setRoomObject(roomModel)

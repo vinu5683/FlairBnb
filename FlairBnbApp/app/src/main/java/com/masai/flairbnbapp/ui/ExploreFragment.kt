@@ -14,8 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ExploreFragment : Fragment() {
 
-    lateinit var front_layout: View;
-    lateinit var back_layout: View;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,21 +26,16 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val backdropLayout = view.findViewById<BackdropLayout>(R.id.searchBackDropContainer)
-
-        back_layout = backdropLayout.getChildAt(0)
-        front_layout = backdropLayout.getChildAt(1)
         MainActivity.navToggleInterface.setNavigation(true)
         val navController = Navigation.findNavController(view)
-
 
         view.findViewById<Button>(R.id.btnNext2).setOnClickListener {
             navController.navigate(R.id.action_exploreFragment_to_hostPart1Fragment)
         }
-
+        view.findViewById<Button>(R.id.btnSearch).setOnClickListener {
+            navController.navigate(R.id.action_exploreFragment_to_placesFragment)
+        }
     }
-
-
 
 }
 

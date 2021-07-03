@@ -6,48 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.ExploreFragment">
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/btnNext2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Host A Store"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:title="backdrop"
-            app:titleTextColor="@color/black" />
-
-        <com.roacult.backdrop.BackdropLayout
-            android:id="@+id/searchBackDropContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:back_layout="@id/includedBack"
-            app:closeDrawable="@drawable/ic_close"
-            app:front_layout="@id/includedFront"
-            app:menuDrawable="@drawable/ic_menu"
-            app:peekHeight="56dp"
-            app:toolbarId="@id/toolbar">
-
-            <include
-                android:id="@+id/includedBack"
-                layout="@layout/search_result_back_layer" />
-
-            <include
-                android:id="@+id/includedFront"
-                layout="@layout/search_result_front_layer" />
-
-        </com.roacult.backdrop.BackdropLayout>
-
-        <Button
-            android:id="@+id/btnNext2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="Host A Store" />
-    </LinearLayout>
-
-
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Search"
+        app:layout_constraintTop_toBottomOf="@id/btnNext2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

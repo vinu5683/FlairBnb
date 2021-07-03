@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
         android:gravity="center|start"
         android:paddingStart="10dp"
         android:text="Let's finish the hosting with \nbelow details."

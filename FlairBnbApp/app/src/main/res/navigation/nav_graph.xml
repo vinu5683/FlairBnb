@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_hostPart1Fragment"
             app:destination="@id/hostPart1Fragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_placesFragment"
+            app:destination="@id/placesFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -156,4 +159,9 @@
         android:name="com.masai.flairbnbapp.ui.MyHostPlacesFragment"
         android:label="fragment_my_host_places"
         tools:layout="@layout/fragment_my_host_places" />
+    <fragment
+        android:id="@+id/placesFragment"
+        android:name="com.masai.flairbnbapp.ui.PlacesFragment"
+        android:label="fragment_places"
+        tools:layout="@layout/fragment_places" />
 </navigation>

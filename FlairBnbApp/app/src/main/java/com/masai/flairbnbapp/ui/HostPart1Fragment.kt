@@ -121,7 +121,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             location_lat = "",
             location_long = "",
             host_id = "",
-            listOfAvailableServices = null,
+            services = null,
             rating = 0,
             rooms = 0,
             total_capacity = 0,
@@ -132,6 +132,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             city = "",
             state = "",
             country = "",
+            images = null,
         )
     }
 
@@ -160,13 +161,13 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
 
             // Clears the previously touched position
-            map?.clear()
+            map.clear()
 
             // Animating to the touched position
-            map?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+            map.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 
             // Placing a marker on the touched position
-            map?.addMarker(markerOptions)
+            map.addMarker(markerOptions)
 
         })
 
@@ -238,12 +239,6 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             Log.i("TAG", "The user did not grant location permission.")
 
             // Add a default marker, because the user hasn't selected a place.
-            map?.addMarker(
-                MarkerOptions()
-                    .title("title")
-                    .position(defaultLocation)
-                    .snippet("snippet")
-            )
             // Prompt the user for permission.
             getLocationPermission()
         }

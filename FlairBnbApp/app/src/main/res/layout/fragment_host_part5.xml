@@ -14,12 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
         android:gravity="center|start"
         android:paddingStart="10dp"
         android:text="What kind of space and services\nwill guests have?"
         android:textColor="@color/white"
-        android:textSize="26dp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/part5Card"
         app:layout_constraintTop_toTopOf="parent" />

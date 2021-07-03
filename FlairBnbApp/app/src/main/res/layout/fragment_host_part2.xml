@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
         android:gravity="center|start"
         android:paddingStart="10dp"
         android:text="What kind of place will you host?"
@@ -27,7 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="30dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="16dp"
+
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ScrollView
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="45dp">
+                android:paddingBottom="15dp">
 
                 <LinearLayout
                     android:id="@+id/ll_cat_flat"

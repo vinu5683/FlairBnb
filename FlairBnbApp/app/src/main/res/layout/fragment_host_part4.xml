@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
         android:gravity="center|start"
         android:paddingStart="10dp"
         android:text="What kind of space will \nguests have?"
@@ -126,24 +125,22 @@
                         android:textSize="20sp" />
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnNext5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="30dp"
-                    android:text="Next"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
             </LinearLayout>
 
         </ScrollView>
 
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btnNext5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:text="Next"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

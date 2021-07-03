@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
         android:gravity="center|start"
         android:paddingStart="10dp"
         android:text="Let's know more about you."

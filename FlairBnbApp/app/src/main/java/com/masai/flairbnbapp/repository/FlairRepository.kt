@@ -2,7 +2,6 @@ package com.masai.flairbnbapp.repository
 
 import android.net.Uri
 import android.util.Log
-import android.webkit.MimeTypeMap
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,7 +9,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.masai.flairbnbapp.models.RoomModel
-import com.masai.flairbnbapp.models.ServiceListModel
 import com.masai.flairbnbapp.models.UserModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -159,5 +157,86 @@ class FlairRepository {
 
     fun setServiceList(l: java.util.ArrayList<String>) {
         roomServiceList = l
+    }
+
+
+    val listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
+
+    fun getPlaces(criteria: HashMap<String, String>) {
+        val dataList = ArrayList<RoomModel>()
+        val city = criteria["city"]
+        val state = criteria["state"]
+        val country = criteria["country"]
+
+        if (city != null && city != "") {
+            dbRootReference.getReference("places")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            snapshot.children.forEach {
+                                if (it.child("city").value?.equals(city)!!) {
+                                    val x = it.getValue(
+                                        RoomModel::class.java
+                                    )
+                                    if (x != null)
+                                        dataList.add(x)
+                                }
+                            }
+                        }
+                        listOfPlaces.value = dataList
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+        } else if (state != null && state != "") {
+            dbRootReference.getReference("places")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            snapshot.children.forEach {
+                                if (it.child("state").value?.equals(state)!!) {
+                                    val x = it.getValue(
+                                        RoomModel::class.java
+                                    )
+                                    if (x != null)
+                                        dataList.add(x)
+                                }
+                            }
+                            listOfPlaces.value = dataList
+
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+
+        } else {
+            dbRootReference.getReference("places")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            snapshot.children.forEach {
+                                if (it.child("country").value?.equals(country)!!) {
+                                    val x = it.getValue(
+                                        RoomModel::class.java
+                                    )
+                                    if (x != null)
+                                        dataList.add(x)
+                                }
+                            }
+                            listOfPlaces.value = dataList
+
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+        }
     }
 }

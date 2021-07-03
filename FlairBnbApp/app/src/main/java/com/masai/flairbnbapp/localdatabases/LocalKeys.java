@@ -11,6 +11,8 @@ public class LocalKeys {
     public static final String KEY_IS_USER_LOGGED_IN = "DOES_USER_LOGGED_IN_1";
     public static final String KEY_USER_GOOGLE_ID = "GOOGLE_USER_ID_1";
     public static final String KEY_USER_LOGIN_TYPE = "KEYS_LOGIN_TYPE_USER";
+    public static final String KEY_USER_CITY_LAT = "KEYS_CITY_OF_USER_LAT";
+    public static final String KEY_USER_CITY_LONG = "KEYS_CITY_OF_USER_LONG";
 
     public static ArrayList<SubCategoryModel> getHouseSubCategoryList() {
         ArrayList<SubCategoryModel> list = new ArrayList<SubCategoryModel>();
