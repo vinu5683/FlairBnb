@@ -27,4 +27,12 @@ class PlacesViewModel @Inject public constructor(
         return listOfPlaces
     }
 
+    fun search(
+        text: String,
+        hashCriteria: java.util.HashMap<String, String>
+    ): MutableLiveData<ArrayList<RoomModel>> {
+        repository.search(text, hashCriteria)
+        return repository.searchRoomList
+    }
+
 }

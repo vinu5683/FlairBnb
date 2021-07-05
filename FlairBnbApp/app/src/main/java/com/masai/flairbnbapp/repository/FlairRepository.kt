@@ -26,6 +26,7 @@ class FlairRepository {
     val dbRootReference = FirebaseDatabase.getInstance()
     var userModel = MutableLiveData<UserModel>()
     val roomsModelList = MutableLiveData<ArrayList<RoomModel>>()
+    val searchRoomList = MutableLiveData<ArrayList<RoomModel>>()
     var roomModel: RoomModel? = null
     var roomServiceList: ArrayList<String>? = null
     var downloadImageList: ArrayList<Uri> = ArrayList()
@@ -151,14 +152,12 @@ class FlairRepository {
                 if (it.isSuccessful) {
                     Log.d("TAG", "saveUserModel: Succ")
                 } else Log.d("TAG", "saveUserModel: fail")
-
             }
     }
 
     fun setServiceList(l: java.util.ArrayList<String>) {
         roomServiceList = l
     }
-
 
     val listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
 
@@ -205,10 +204,8 @@ class FlairRepository {
                                 }
                             }
                             listOfPlaces.value = dataList
-
                         }
                     }
-
                     override fun onCancelled(error: DatabaseError) {
 
                     }
@@ -229,7 +226,6 @@ class FlairRepository {
                                 }
                             }
                             listOfPlaces.value = dataList
-
                         }
                     }
 
@@ -238,5 +234,50 @@ class FlairRepository {
                     }
                 })
         }
+    }
+
+    fun search(
+        text: String,
+        criteria: HashMap<String, String>
+    ) {
+
+        val dataList = ArrayList<RoomModel>()
+        val city = criteria["city"]
+        val state = criteria["state"]
+        val country = criteria["country"]
+
+        dbRootReference.getReference("places")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try {
+                        if (snapshot.exists()) {
+                            searchRoomList.value?.clear()
+                            snapshot.children.forEach {
+
+                                val snapCountry = it.child("country").value?.equals(country)!!
+                                val snapCity = it.child("city").value?.equals(city)!!
+                                val snapState = it.child("state").value?.equals(state)!!
+                                val searchType = it.child("title").value.toString()
+                                if ((snapCity || snapCountry || snapState) &&
+                                    searchType.toLowerCase().contains(text.trim().toLowerCase())
+                                ) {
+                                    val x = it.getValue(
+                                        RoomModel::class.java
+                                    )
+                                    if (x != null)
+                                        dataList.add(x)
+                                }
+                            }
+                            searchRoomList.value = dataList
+                        }
+                    } catch (e: Exception) {
+
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
     }
 }

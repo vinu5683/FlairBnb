@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="graytextblack">#191919</color>
+    <color name="demo_dark_transparent">#24000000</color>
 
 </resources>

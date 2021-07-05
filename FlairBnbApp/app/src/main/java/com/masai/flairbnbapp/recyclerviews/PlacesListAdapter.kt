@@ -4,11 +4,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 //import com.denzcoskun.imageslider.ImageSlider
 //import com.denzcoskun.imageslider.models.SlideModel
 import com.masai.flairbnbapp.R
@@ -74,13 +72,17 @@ class PlacesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         place_rating.text = model.rating.toString()
         place_name.text = model.title.toString()
         shortdiscription.text = model.description.toString()
-        place_price.text = model.price.toString()
+        val price: String = if (model.price!! > 999) {
+            (model.price!! / 1000).toInt().toString() + "," + (model.price!! % 1000)
+        } else
+            model.price.toString()
+        totalPrice.text = "₹$price"
+        place_price.text = "₹$price"
         priceforwhat.text = model.priceForWhat.toString()
-        totalPrice.text = model.price.toString()
-        placesListInterface.setMarkOnMap(model, adapterPosition)
 
+        placesListInterface.setMarkOnMap(model, adapterPosition)
         placeItemContainer.setOnClickListener {
-            placesListInterface.onItemClick(model, adapterPosition)
+            placesListInterface.onHrItemClick(model, adapterPosition)
         }
     }
 

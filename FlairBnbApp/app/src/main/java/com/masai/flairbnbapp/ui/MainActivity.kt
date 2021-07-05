@@ -54,10 +54,14 @@ class MainActivity : AppCompatActivity(), NavigationToggleComponent {
     }
 
     override fun setNavigation(flag: Boolean) {
-        if (flag) {
-            nav_view.visibility = View.VISIBLE
-        } else
-            nav_view.visibility = View.GONE
+        try {
+            if (flag) {
+                nav_view.visibility = View.VISIBLE
+            } else
+                nav_view.visibility = View.GONE
+        } catch (e: Exception) {
+
+        }
     }
 
     override fun navigateToProfile() {

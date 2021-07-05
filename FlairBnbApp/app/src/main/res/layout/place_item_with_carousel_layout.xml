@@ -9,12 +9,19 @@
     android:focusable="true"
     android:foreground="@drawable/ripple_effect">
 
-
-    <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/carouselViewItem"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/carouselViewItem1"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/carouselViewItem"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/place_rating"
@@ -23,14 +30,15 @@
         android:drawableStart="@drawable/ic_baseline_star_24"
         android:drawablePadding="1dp"
         android:maxLines="1"
+        android:layout_marginTop="4dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="4.8 (14)"
         android:textColor="@color/graytextblack"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/carouselViewItem"
-        app:layout_constraintStart_toStartOf="@id/carouselViewItem"
-        app:layout_constraintTop_toBottomOf="@+id/carouselViewItem" />
+        app:layout_constraintEnd_toEndOf="@id/carouselViewItem1"
+        app:layout_constraintStart_toStartOf="@id/carouselViewItem1"
+        app:layout_constraintTop_toBottomOf="@+id/carouselViewItem1" />
 
     <TextView
         android:id="@+id/place_name"
@@ -42,8 +50,8 @@
         android:text="Place name comes here"
         android:textColor="@color/graytextblack"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/carouselViewItem"
-        app:layout_constraintStart_toStartOf="@id/carouselViewItem"
+        app:layout_constraintEnd_toEndOf="@id/carouselViewItem1"
+        app:layout_constraintStart_toStartOf="@id/carouselViewItem1"
         app:layout_constraintTop_toBottomOf="@+id/place_rating" />
 
     <TextView
@@ -56,9 +64,9 @@
         android:paddingEnd="10dp"
         android:text="Short description about the place co..."
         android:textColor="@color/graytextblack"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/carouselViewItem"
-        app:layout_constraintStart_toStartOf="@id/carouselViewItem"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/carouselViewItem1"
+        app:layout_constraintStart_toStartOf="@id/carouselViewItem1"
         app:layout_constraintTop_toBottomOf="@+id/place_name" />
 
     <TextView
@@ -70,9 +78,9 @@
         android:paddingEnd="4dp"
         android:text="1,200"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/carouselViewItem"
+        app:layout_constraintStart_toStartOf="@id/carouselViewItem1"
         app:layout_constraintTop_toBottomOf="@+id/shortdiscription" />
 
     <TextView
@@ -84,7 +92,7 @@
         android:paddingEnd="10dp"
         android:text="/ night"
         android:textColor="@color/graytextblack"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/place_price"
         app:layout_constraintTop_toBottomOf="@+id/shortdiscription" />
 
@@ -98,8 +106,8 @@
         android:paddingEnd="10dp"
         android:text="1200 Total"
         android:textColor="#646464"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/carouselViewItem"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/carouselViewItem1"
         app:layout_constraintTop_toBottomOf="@+id/place_price" />
 
 

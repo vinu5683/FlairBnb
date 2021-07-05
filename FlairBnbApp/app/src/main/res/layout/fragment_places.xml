@@ -1,87 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="26dp"
     tools:context=".ui.PlacesFragment">
 
-    <LinearLayout
-        android:id="@+id/topPlaceFragment"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="15dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btnBackFromPlaceFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_arrow_back_24" />
-
-        <EditText
-            android:id="@+id/etSearchPlaceFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_rectangle_for_search"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Add a location"
-            android:textSize="18sp" />
-
-        <ImageButton
-            android:id="@+id/btnSettingPlaceFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_settings_24" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/searchCriteria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/topPlaceFragment">
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/topPlaceFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="search chips" />
-    </LinearLayout>
+            android:background="@color/white"
+            android:padding="15dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/topPlaceFragment">-->
+            <ImageButton
+                android:id="@+id/btnBackFromPlaceFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/topPlaceFragment">
+            <EditText
+                android:id="@+id/etSearchPlaceFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:maxLength="15"
+                android:imeOptions="actionSearch"
+                android:background="@drawable/rounded_rectangle_for_search"
+                android:gravity="center"
+                android:hint="Search: tree house"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/btnSettingPlaceFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_settings_24" />
+
+        </LinearLayout>
 
         <fragment
             android:id="@+id/placesMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:layout_constraintTop_toBottomOf="@+id/topPlaceFragment" />
+            android:layout_height="0dp"
+            android:layout_marginBottom="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topPlaceFragment"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="-16dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPlacesFragment"
+            android:id="@+id/rvSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <!--    </ScrollView>-->
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:maxHeight="150dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/topPlaceFragment" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPlaces_Hr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/placesMap" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        app:behavior_peekHeight="70dp"
+        app:cardCornerRadius="16dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        <!--        app:layout_behavior="ui.GestureLockedBottomSheetBehavior">-->
+
+        <!--This is the backdrop's header with a title and icon-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/rounded_rectangle_shape_style" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:elevation="6dp"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="300+ Places to stay"
+                        android:textColor="@color/graytextblack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!--And finally this is the body of the backdrop's content. You can add here whatever you need inside a view group (LinearLayout, RelativeLayout, SwipeRefreshLayout, ConstraintLayout, etc.)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <com.todkars.shimmer.ShimmerRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/rvPlacesFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:shimmer_recycler_item_count="10"
+                    app:shimmer_recycler_layout="@layout/demo_shimmer_grid" />
+
+                <!--                <androidx.recyclerview.widget.RecyclerView-->
+                <!--                    android:id="@+id/rvPlacesFragment"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:background="@color/white" />-->
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

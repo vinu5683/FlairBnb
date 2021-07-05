@@ -6,20 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".ui.ExploreFragment">
 
-
-    <Button
-        android:id="@+id/btnNext2"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="Host A Store"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="Search"
-        app:layout_constraintTop_toBottomOf="@id/btnNext2" />
+        <Button
+            android:id="@+id/btnNext2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Host A Store"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="Search"
+            app:layout_constraintTop_toBottomOf="@id/btnNext2" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

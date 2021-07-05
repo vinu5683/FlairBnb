@@ -28,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
@@ -62,11 +63,12 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_host_part1, container, false)
     }
 
+    lateinit var v: View
     val roomModel = initModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        v = view
         val navController = Navigation.findNavController(view)
         getLocationPermission()
         if (savedInstanceState != null) {
@@ -147,6 +149,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         getLocationPermission()
         this.map = map
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(v.context, R.raw.map_styles));
 
         map.setOnMapClickListener(GoogleMap.OnMapClickListener { latLng -> // Creating a marker
             val markerOptions = MarkerOptions()
@@ -226,20 +229,13 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             return
         }
         if (locationPermissionGranted) {
-            // Use fields to define the data types to return.
             val placeFields = listOf(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
 
-            // Use the builder to create a FindCurrentPlaceRequest.
             val request = FindCurrentPlaceRequest.newInstance(placeFields)
 
-            // Get the likely places - that is, the businesses and other points of interest that
-            // are the best match for the device's current location.
         } else {
-            // The user has not granted permission.
             Log.i("TAG", "The user did not grant location permission.")
 
-            // Add a default marker, because the user hasn't selected a place.
-            // Prompt the user for permission.
             getLocationPermission()
         }
     }
@@ -260,15 +256,5 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
         }
-    }
-
-    fun moveCamera() {
-
-        val ll = ""
-
-        map?.moveCamera(
-            CameraUpdateFactory
-                .newLatLngZoom(LatLng(ll[0].toDouble(), ll[1].toDouble()), DEFAULT_ZOOM.toFloat())
-        )
     }
 }

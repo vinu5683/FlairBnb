@@ -2,7 +2,6 @@ package com.masai.flairbnbapp.recyclerviews
 
 import com.masai.flairbnbapp.models.RoomModel
 
-interface PlacesListInterface {
+interface HorizontalPlaceListListenerInterface {
     fun onHrItemClick(roomModel: RoomModel, pos: Int)
-    fun setMarkOnMap(roomModel: RoomModel,pos: Int)
 }
