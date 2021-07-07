@@ -176,31 +176,8 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
         updateLocationUI()
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation()
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    private fun getDeviceLocation() {
-        try {
-            if (locationPermissionGranted) {
-                val locationResult = fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener(activity?.mainExecutor!!) { task ->
-                    if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
-                    } else {
-                        Log.d("TAG", "Current location is null. Using defaults.")
-                        Log.e("TAG", "Exception: %s", task.exception)
-                        map?.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
-                        )
-                    }
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

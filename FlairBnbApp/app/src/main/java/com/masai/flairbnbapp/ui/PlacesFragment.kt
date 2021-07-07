@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -74,7 +75,7 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
     private val options = MarkerOptions()
     val hashCriteria = HashMap<String, String>()
     lateinit var etSearchPlaceFragment: EditText
-
+    lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,7 +123,7 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         PreferenceHelper.getSharedPreferences(view.context)
-        val navController = Navigation.findNavController(view)
+        navController = Navigation.findNavController(view)
         v = view
         getLocationPermission()
         initViews(view)
@@ -329,31 +330,6 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    private fun getDeviceLocation() {
-        try {
-            if (locationPermissionGranted) {
-                val locationResult = fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener(activity?.mainExecutor!!) { task ->
-                    if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
-                    } else {
-                        Log.d("TAG", "Current location is null. Using defaults.")
-                        Log.e("TAG", "Exception: %s", task.exception)
-                        map?.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(
-                                    defaultLocation,
-                                    DEFAULT_ZOOM.toFloat()
-                                )
-                        )
-                    }
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -418,7 +394,6 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         }
         updateLocationUI()
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation()
     }
 
     fun moveCamera(lat: Double, long: Double, zoom: Int) {
@@ -477,7 +452,7 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
     }
 
     override fun onSearchItemClick(roomModel: RoomModel, pos: Int) {
-
+        navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
     }
 
     override fun getLagLang(): LatLng {

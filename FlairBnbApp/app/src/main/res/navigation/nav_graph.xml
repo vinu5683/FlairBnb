@@ -163,5 +163,14 @@
         android:id="@+id/placesFragment"
         android:name="com.masai.flairbnbapp.ui.PlacesFragment"
         android:label="fragment_places"
-        tools:layout="@layout/fragment_places" />
+        tools:layout="@layout/fragment_places" >
+        <action
+            android:id="@+id/action_placesFragment_to_placeDetailsFragment"
+            app:destination="@id/placeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/placeDetailsFragment"
+        android:name="com.masai.flairbnbapp.ui.PlaceDetailsFragment"
+        android:label="fragment_place_details"
+        tools:layout="@layout/fragment_place_details" />
 </navigation>
