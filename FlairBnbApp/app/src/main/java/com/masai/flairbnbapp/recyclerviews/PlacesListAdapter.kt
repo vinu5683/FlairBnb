@@ -82,7 +82,7 @@ class PlacesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         placesListInterface.setMarkOnMap(model, adapterPosition)
         placeItemContainer.setOnClickListener {
-            placesListInterface.onHrItemClick(model, adapterPosition)
+            placesListInterface.onItemClick(model, adapterPosition)
         }
     }
 

@@ -49,7 +49,7 @@ class SearchListViewHolder(itemView: View, val searchListInterface: SearchListIn
         )
         results[0] = results[0] / 10
         val res = (results[0].toInt() / 100).toString() + "." + results[0].toInt() % 100
-        textview.text = roomModel.title + " - " + roomModel.city + " " + res + " Km"
+        textview.text = roomModel.title + " - " + roomModel.city + " - " + res + " Km"
 
         cardView.setOnClickListener {
             searchListInterface.onSearchItemClick(roomModel, adapterPosition)

@@ -4,6 +4,8 @@ import com.masai.flairbnbapp.R;
 import com.masai.flairbnbapp.models.ServiceListModel;
 import com.masai.flairbnbapp.models.SubCategoryModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class LocalKeys {
@@ -243,28 +245,47 @@ public class LocalKeys {
         return list;
     }
 
-    public static void main(String[] args) {
-//        class Node {
-//            int data;
-//            Node next;
-//        }
-//
-//        Node head;
-//        int k = 2;
-//        Node cur = head;
-//        Node breaker = cur;
-//        int i = 0;
-//        while (cur != null) {
-//            if (i > k) {
-//                breaker = breaker.next;
-//            }
-//            cur = cur.next;
-//            i++;
-//
-//        }
-//        cur.next = head;
-//        head = breaker.next;
-//        breaker.next = null
 
+    public static int getServiceIconIdByName(@NotNull String s) {
+        switch (s) {
+            case "Pool":
+                return R.drawable.ic_pool;
+            case "Hot tub":
+                return R.drawable.ic_hottub;
+            case "Patio":
+                return R.drawable.ic_patio;
+            case "BBQ grill":
+                return R.drawable.ic_bbq_grill;
+            case "Fire pit":
+                return R.drawable.ic_firepit;
+            case "Dining":
+                return R.drawable.ic_dining;
+            case "Exercise":
+                return R.drawable.ic_exercise;
+            case "Wifi":
+                return R.drawable.ic_wifi;
+            case "TV":
+                return R.drawable.ic_tv;
+            case "Kitchen":
+                return R.drawable.ic_kitchen;
+            case "Washing machine":
+                return R.drawable.ic_washingmachine;
+            case "Parking":
+                return R.drawable.ic_parking;
+            case "Air conditions":
+                return R.drawable.ic_ac;
+            case "Shower":
+                return R.drawable.ic_shower;
+            case "First aid kit":
+                return R.drawable.ic_firstaidkit;
+            case "Smoke alarm":
+                return R.drawable.ic_smokealarm;
+            case "Fire extinguisher":
+                return R.drawable.ic_fireextinguisher;
+            case "Room lock":
+                return R.drawable.ic_roomlock;
+            default:
+                return R.drawable.ic_baseline_settings_24;
+        }
     }
 }

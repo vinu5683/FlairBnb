@@ -410,6 +410,12 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         moveCamera(lat, long, 15)
     }
 
+    override fun onItemClick(roomModel: RoomModel, adapterPosition: Int) {
+        placesViewModel.setTheSelectedRoomModel(roomModel)
+        getCurrentLocationOfUser(v)
+        navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
+    }
+
     override fun setMarkOnMap(roomModel: RoomModel, pos: Int) {
         val title = roomModel.title
         val address = roomModel.city + ", " + roomModel.state
@@ -452,7 +458,38 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
     }
 
     override fun onSearchItemClick(roomModel: RoomModel, pos: Int) {
+        placesViewModel.setTheSelectedRoomModel(roomModel)
+        getCurrentLocationOfUser(v)
         navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
+    }
+
+    private fun getCurrentLocationOfUser(view: View) {
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(activity?.applicationContext!!)
+        if (ActivityCompat.checkSelfPermission(
+                view.context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                view.context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+                Log.d("TAG", "onViewCreated: ")
+
+                if (it != null) {
+                    PreferenceHelper.writeStringToPreference(
+                        LocalKeys.KEY_USER_CITY_LAT,
+                        it.latitude.toString()
+                    )
+                    PreferenceHelper.writeStringToPreference(
+                        LocalKeys.KEY_USER_CITY_LONG,
+                        it.longitude.toString()
+                    )
+
+                }
+            }
+        }
     }
 
     override fun getLagLang(): LatLng {

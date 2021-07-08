@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/item_service_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingTop="6dp"
+        android:src="@drawable/ic_ac" />
+
+    <TextView
+        android:id="@+id/item_service_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:paddingStart="16dp"
+        android:paddingEnd="10dp"
+        android:text="Kitchen"
+        android:textColor="@color/graytextblack"
+        android:textSize="18sp" />
+
+</LinearLayout>

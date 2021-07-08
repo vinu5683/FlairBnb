@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.masai.flairbnbapp.R
@@ -19,7 +20,7 @@ class ImageListingAdapter(val list: ArrayList<Uri>) :
 
     override fun onBindViewHolder(holder: ImageListingViewHolder, position: Int) {
         val uri = list[position]
-        holder.setData(uri)
+        holder.setData(uri, list.size)
     }
 
     override fun getItemCount(): Int {
@@ -28,11 +29,12 @@ class ImageListingAdapter(val list: ArrayList<Uri>) :
 }
 
 class ImageListingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    val tvImagePosition: TextView = itemView.findViewById(R.id.tvImagePosition)
     val imageItem = itemView.findViewById<ImageView>(R.id.itemImage)
 
-    fun setData(uri: Uri) {
+    fun setData(uri: Uri, size: Int) {
         Glide.with(imageItem.context).load(uri).into(imageItem)
+        tvImagePosition.text = (adapterPosition + 1).toString() + "/" + size
     }
 
 }

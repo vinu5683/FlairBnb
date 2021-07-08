@@ -16,6 +16,7 @@ import kotlin.collections.ArrayList
 
 class FlairRepository {
 
+    var selectedRoom: RoomModel = RoomModel()
     val isSaveDone: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     init {
@@ -31,6 +32,9 @@ class FlairRepository {
     var roomServiceList: ArrayList<String>? = null
     var downloadImageList: ArrayList<Uri> = ArrayList()
     var counter = 0
+
+    var currentPlaceUser = MutableLiveData<UserModel>()
+
     fun setRoomObject(room: RoomModel) {
         roomModel = room
     }
@@ -206,6 +210,7 @@ class FlairRepository {
                             listOfPlaces.value = dataList
                         }
                     }
+
                     override fun onCancelled(error: DatabaseError) {
 
                     }
@@ -278,6 +283,36 @@ class FlairRepository {
                 override fun onCancelled(error: DatabaseError) {
 
                 }
+            })
+    }
+
+    fun getUserNameById(hostId: String?) {
+        dbRootReference.getReference("user").child(hostId.toString())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val userModel = UserModel(
+                            firstName = snapshot.child("firstName").value.toString(),
+                            lastName = snapshot.child("lastName").value.toString(),
+                            id = snapshot.child("id").value.toString(),
+                            profilePic = snapshot.child("profilePic").value.toString(),
+                            email = snapshot.child("email").value.toString(),
+                            address = snapshot.child("address").value.toString(),
+                            contactNumber = snapshot.child("contactNumber").value.toString(),
+                            token = snapshot.child("contactNumber").value.toString(),
+                            gender = null,
+                            location = null,
+                            loginType = null
+                        )
+                        currentPlaceUser.value = userModel
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
             })
     }
 }

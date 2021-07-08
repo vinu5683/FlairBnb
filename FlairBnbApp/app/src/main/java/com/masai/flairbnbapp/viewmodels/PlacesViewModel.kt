@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.masai.flairbnbapp.models.RoomModel
+import com.masai.flairbnbapp.models.UserModel
 import com.masai.flairbnbapp.repository.FlairRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,6 +16,10 @@ class PlacesViewModel @Inject public constructor(
 ) : ViewModel() {
 
     var listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
+
+    fun getTheSelectedRoom(): RoomModel {
+        return repository.selectedRoom
+    }
 
     fun getListOfPlaces(
         criteria: HashMap<String, String>,
@@ -33,6 +38,15 @@ class PlacesViewModel @Inject public constructor(
     ): MutableLiveData<ArrayList<RoomModel>> {
         repository.search(text, hashCriteria)
         return repository.searchRoomList
+    }
+
+    fun setTheSelectedRoomModel(roomModel: RoomModel) {
+        repository.selectedRoom = roomModel
+    }
+
+    fun getUserNameById(hostId: String?): MutableLiveData<UserModel> {
+        repository.getUserNameById(hostId)
+        return repository.currentPlaceUser
     }
 
 }
