@@ -1,5 +1,6 @@
 package com.masai.flairbnbapp.recyclerviews
 
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 //import com.denzcoskun.imageslider.ImageSlider
 //import com.denzcoskun.imageslider.models.SlideModel
 import com.masai.flairbnbapp.R
+import com.masai.flairbnbapp.localdatabases.LocalKeys
+import com.masai.flairbnbapp.localdatabases.PreferenceHelper
 import com.masai.flairbnbapp.models.RoomModel
 import com.smarteist.autoimageslider.SliderView
 
@@ -72,14 +75,16 @@ class PlacesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         place_rating.text = model.rating.toString()
         place_name.text = model.title.toString()
         shortdiscription.text = model.description.toString()
+        val total = placesListInterface.getTotal(model.price.toString());
         val price: String = if (model.price!! > 999) {
             (model.price!! / 1000).toInt().toString() + "," + (model.price!! % 1000)
         } else
             model.price.toString()
-        totalPrice.text = "₹$price"
-        place_price.text = "₹$price"
+        totalPrice.text =
+            "Total ₹$total (${PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS)} days)"
+        totalPrice.paintFlags = totalPrice.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        place_price.text = "₹${price}"
         priceforwhat.text = model.priceForWhat.toString()
-
         placesListInterface.setMarkOnMap(model, adapterPosition)
         placeItemContainer.setOnClickListener {
             placesListInterface.onItemClick(model, adapterPosition)

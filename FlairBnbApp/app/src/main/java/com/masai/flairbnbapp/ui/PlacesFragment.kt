@@ -19,6 +19,7 @@ import androidx.cardview.widget.CardView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -35,6 +36,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.maps.android.ui.IconGenerator
 import com.masai.flairbnbapp.R
 import com.masai.flairbnbapp.localdatabases.LocalKeys
@@ -45,9 +49,13 @@ import com.masai.flairbnbapp.viewmodels.PlacesViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_places.*
+import java.text.Format
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
 
 
 @AndroidEntryPoint
@@ -384,70 +392,12 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    override fun onMapReady(map: GoogleMap) {
-        getLocationPermission()
-        this.map = map
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(v.context, R.raw.map_styles));
-        map.setOnCameraMoveListener {
-            rvSearch.visibility = View.GONE
-        }
-        updateLocationUI()
-        // Get the current location of the device and set the position of the map.
-    }
-
     fun moveCamera(lat: Double, long: Double, zoom: Int) {
         val location = CameraUpdateFactory.newLatLngZoom(
             LatLng(lat, long), zoom.toFloat()
         )
         map?.animateCamera(location)
 
-    }
-
-    override fun onHrItemClick(roomModel: RoomModel, pos: Int) {
-        val lat = roomModel.location_lat.toString().toDouble()
-        val long = roomModel.location_long.toString().toDouble()
-        moveCamera(lat, long, 15)
-    }
-
-    override fun onItemClick(roomModel: RoomModel, adapterPosition: Int) {
-        placesViewModel.setTheSelectedRoomModel(roomModel)
-        getCurrentLocationOfUser(v)
-        navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
-    }
-
-    override fun setMarkOnMap(roomModel: RoomModel, pos: Int) {
-        val title = roomModel.title
-        val address = roomModel.city + ", " + roomModel.state
-
-        //generate the icon using the view
-        val iconGenerator = IconGenerator(v.context)
-        iconGenerator.setBackground(v.context.getDrawable(R.drawable.bg_custom_marker))
-        val inflatedView = View.inflate(context, R.layout.marker_custom, null)
-        val textView = inflatedView.findViewById<TextView>(R.id.roomPrice)
-
-        val price: String = if (roomModel.price!! > 999) {
-            (roomModel.price!! / 1000).toInt().toString() + "," + (roomModel.price!! % 1000)
-        } else
-            roomModel.price.toString()
-        textView.text = "₹$price"
-        iconGenerator.setContentView(inflatedView)
-
-        options.position(
-            LatLng(
-                roomModel.location_lat?.toDouble()!!,
-                roomModel.location_long?.toDouble()!!
-            )
-        )
-        options.title(title)
-        options.snippet(address)
-        options.icon(BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon()))
-        map?.addMarker(options)
-    }
-
-    override fun onMarkerClick(marker: Marker): Boolean {
-
-        return true
     }
 
 
@@ -457,10 +407,86 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
     }
 
+    @ExperimentalTime
     override fun onSearchItemClick(roomModel: RoomModel, pos: Int) {
         placesViewModel.setTheSelectedRoomModel(roomModel)
         getCurrentLocationOfUser(v)
-        navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
+        showDateTimeRangePicker()
+    }
+
+    @ExperimentalTime
+    private fun showDateTimeRangePicker() {
+
+        val calender: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calender.clear()
+
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+        calender.set(Calendar.MONTH, Calendar.JANUARY)
+
+        calender.timeInMillis = today
+
+        val calConstBuilder: CalendarConstraints.Builder = CalendarConstraints.Builder()
+        calConstBuilder.setValidator(DateValidatorPointForward.now())
+
+        val mBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> =
+            MaterialDatePicker.Builder.dateRangePicker()
+        mBuilder.setTitleText("Check-in - Check-out")
+        mBuilder.setCalendarConstraints(calConstBuilder.build())
+
+        val materialDatePicker = mBuilder.build()
+        materialDatePicker.show(activity?.supportFragmentManager!!, "DATE_PIKER")
+        materialDatePicker.addOnPositiveButtonClickListener {
+            val check_in = Date(it.first)
+            val check_out = Date(it.second)
+            val format: Format = SimpleDateFormat("yyyy MMM dd")
+
+            PreferenceHelper.writeStringToPreference(
+                LocalKeys.CHECK_IN_TIME,
+                "${it.first} ${format.format(check_in)}"
+            )
+            PreferenceHelper.writeStringToPreference(
+                LocalKeys.CHECK_OUT_TIME,
+                "${it.second} ${format.format(check_out)}"
+            )
+            Log.d("TAG", "showDateTimeRangePicker: ${setTheCheckinCheckoutTime("12")}")
+
+            Log.d(
+                "TAG",
+                "showDateTimeRangePicker: ${format.format(check_in)} \n ${format.format(check_out)}"
+            )
+            navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
+
+        }
+    }
+
+    @ExperimentalTime
+    @SuppressLint("SetTextI18n")
+    private fun setTheCheckinCheckoutTime(price: String): Int {
+        val checkinTime = PreferenceHelper.readStringFromPreference(LocalKeys.CHECK_IN_TIME)
+        val checkoutTime = PreferenceHelper.readStringFromPreference(LocalKeys.CHECK_OUT_TIME)
+        val checkin = checkinTime.split(" ")
+        val checkout = checkoutTime.split(" ")
+
+        if (checkinTime != null && checkoutTime != null &&
+            checkin.size == 4 && checkout.size == 4
+        ) {
+
+//            "${checkin[3] + " " + checkin[2] + " - " + checkout[3] + " " + checkout[2]}"
+
+            try {
+                val x = DurationUnit.DAYS.convert(
+                    checkout[0].toLong() - checkin[0].toLong(),
+                    DurationUnit.MILLISECONDS
+                )
+                PreferenceHelper.writeIntToPreference(LocalKeys.NUMBER_OF_DAYS, x.toInt());
+                return (x * price.toInt()).toInt()
+
+            } catch (e: Exception) {
+                Log.d("TAG", "setTheCheckinCheckoutTime: ${e.printStackTrace()}")
+            }
+        }
+        return price.toInt()
+
     }
 
     private fun getCurrentLocationOfUser(view: View) {
@@ -497,6 +523,71 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
             PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_CITY_LAT).toDouble(),
             PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_CITY_LONG).toDouble()
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    override fun onMapReady(map: GoogleMap) {
+        getLocationPermission()
+        this.map = map
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(v.context, R.raw.map_styles));
+        map.setOnCameraMoveListener {
+            rvSearch.visibility = View.GONE
+        }
+        updateLocationUI()
+        // Get the current location of the device and set the position of the map.
+    }
+
+
+    override fun onHrItemClick(roomModel: RoomModel, pos: Int) {
+        val lat = roomModel.location_lat.toString().toDouble()
+        val long = roomModel.location_long.toString().toDouble()
+        moveCamera(lat, long, 15)
+    }
+
+    @ExperimentalTime
+    override fun onItemClick(roomModel: RoomModel, adapterPosition: Int) {
+        placesViewModel.setTheSelectedRoomModel(roomModel)
+        getCurrentLocationOfUser(v)
+        showDateTimeRangePicker()
+    }
+
+    @ExperimentalTime
+    override fun getTotal(price: String): Int {
+        return setTheCheckinCheckoutTime(price)
+    }
+
+    override fun setMarkOnMap(roomModel: RoomModel, pos: Int) {
+        val title = roomModel.title
+        val address = roomModel.city + ", " + roomModel.state
+
+        //generate the icon using the view
+        val iconGenerator = IconGenerator(v.context)
+        iconGenerator.setBackground(v.context.getDrawable(R.drawable.bg_custom_marker))
+        val inflatedView = View.inflate(context, R.layout.marker_custom, null)
+        val textView = inflatedView.findViewById<TextView>(R.id.roomPrice)
+
+        val price: String = if (roomModel.price!! > 999) {
+            (roomModel.price!! / 1000).toInt().toString() + "," + (roomModel.price!! % 1000)
+        } else
+            roomModel.price.toString()
+        textView.text = "₹$price"
+        iconGenerator.setContentView(inflatedView)
+
+        options.position(
+            LatLng(
+                roomModel.location_lat?.toDouble()!!,
+                roomModel.location_long?.toDouble()!!
+            )
+        )
+        options.title(title)
+        options.snippet(address)
+        options.icon(BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon()))
+        map?.addMarker(options)
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+
+        return true
     }
 
 

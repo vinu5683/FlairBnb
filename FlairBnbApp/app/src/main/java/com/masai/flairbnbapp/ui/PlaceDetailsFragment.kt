@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
@@ -31,6 +33,7 @@ import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.UserModel
 import com.masai.flairbnbapp.recyclerviews.ImageLoopAdapter
 import com.masai.flairbnbapp.recyclerviews.PlaceDetailsServiceListAdapter
+import com.masai.flairbnbapp.recyclerviews.PositionListenerInterface
 import com.masai.flairbnbapp.viewmodels.PlacesViewModel
 import com.smarteist.autoimageslider.SliderView
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,6 +59,7 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_place_details, container, false)
     }
+
 
     lateinit var carouselViewItem: SliderView
     lateinit var rv_serviceList_place_details: RecyclerView
@@ -83,10 +87,12 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
     lateinit var tvCostAndForWhat: TextView
     lateinit var tvFromToDate: TextView
     lateinit var approxDistance: TextView
+    lateinit var tvFreeCancellationDate: TextView
 
     lateinit var showAllAmenities: TextView
     lateinit var btnAllAboutDescShowMore: Button
     lateinit var btnReserve: Button
+    lateinit var backBtnPlaceDetails: ImageButton
 
     @SuppressLint("SetTextI18n")
     private fun setDetails() {
@@ -94,28 +100,36 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
             title_place_details.text = selectedRoom.title + " at " + selectedRoom.city + "."
             reviewsAddress_places_Details.text =
                 selectedRoom.rating.toString() + "(14 reviews) · ${selectedRoom.city}, ${selectedRoom.state}, ${selectedRoom.country}"
-            placesViewModel.getUserNameById(selectedRoom.host_id).observe(viewLifecycleOwner, {
+            placesViewModel.currentPlaceUser.observe(viewLifecycleOwner, {
                 if (it != null) {
                     placeHost = it
                     roomSpaceType_place_details.text =
                         "${selectedRoom.roomSpaceType} of ${selectedRoom.category} is hosted by " +
                                 "${it.firstName}."
                     tvAllAboutSomeOnePlace.text = "All about ${it.firstName}'s place"
-                    showAllAmenities.text = "Show all ${selectedRoom.services?.size} amenities"
                 }
             })
+            showAllAmenities.text = "Show all ${selectedRoom.services?.size} amenities"
             typeShortDec_places_Details.text =
                 "${selectedRoom.roomSpaceType} · ${selectedRoom.category} · ${selectedRoom.subCategory}."
             guest_bbb_places_Details.text =
                 "${selectedRoom.total_capacity} guests · ${selectedRoom.rooms} bedroom · " +
                         "${selectedRoom.beds} beds · ${selectedRoom.total_bathrooms} bathroom"
             tvAllAboutSomeOnePlaceDesc.text = selectedRoom.description
-
             //recycler view
             rv_serviceList_place_details.layoutManager = LinearLayoutManager(v.context)
             placeDetailsServiceAdapter = PlaceDetailsServiceListAdapter(selectedRoom.services!!)
             rv_serviceList_place_details.adapter = placeDetailsServiceAdapter
             placeDetailsServiceAdapter.notifyDataSetChanged()
+            val price: String = if (selectedRoom.price!! > 999) {
+                (selectedRoom.price!! / 1000).toInt()
+                    .toString() + "," + (selectedRoom.price!! % 1000)
+            } else
+                selectedRoom.price.toString()
+            tvCostAndForWhat.text = "₹$price / night"
+
+            setTheCheckinCheckoutTime()
+
 
             //
 
@@ -124,6 +138,27 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
             Log.d("TAG", "setDetails: " + e.printStackTrace())
         }
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setTheCheckinCheckoutTime() {
+        val checkinTime = PreferenceHelper.readStringFromPreference(LocalKeys.CHECK_IN_TIME)
+        val checkoutTime = PreferenceHelper.readStringFromPreference(LocalKeys.CHECK_OUT_TIME)
+        Log.d("TAG", "setDetails: $checkinTime")
+        Log.d("TAG", "setDetails: $checkoutTime")
+        val checkin = checkinTime.split(" ")
+        val checkout = checkoutTime.split(" ")
+
+
+
+        if (checkinTime != null && checkoutTime != null &&
+            checkin.size == 4 && checkout.size == 4
+        ) {
+            tvFreeCancellationDate.text =
+                "Free cancellation before ${checkin[3] + " " + checkin[2]} 12AM"
+            tvFromToDate.text =
+                "${checkin[3] + " " + checkin[2] + " - " + checkout[3] + " " + checkout[2]} (${PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS)} days)"
+        }
     }
 
 
@@ -153,11 +188,13 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
             tvCostAndForWhat = findViewById(R.id.tvCostAndForWhat)
             tvFromToDate = findViewById(R.id.tvFromToDate)
             approxDistance = findViewById(R.id.approxDistance)
+            tvFreeCancellationDate = findViewById(R.id.tvFreeCancellationDate)
 
             //buttons
             showAllAmenities = findViewById(R.id.showAllAmenities)
             btnAllAboutDescShowMore = findViewById(R.id.btnAllAboutDescShowMore)
             btnReserve = findViewById(R.id.btnReserve)
+            backBtnPlaceDetails = findViewById(R.id.backBtnPlaceDetails)
 
         }
     }
@@ -168,7 +205,7 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
             //open fragment and show list of images
         }
 
-        backPlaceDetails.setOnClickListener {
+        backBtnPlaceDetails.setOnClickListener {
             activity?.onBackPressed()
         }
 
@@ -198,9 +235,11 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         v = view
+
         PreferenceHelper.getSharedPreferences(view.context)
         navController = Navigation.findNavController(view)
         selectedRoom = placesViewModel.getTheSelectedRoom()
+        placesViewModel.getUserNameById(selectedRoom.host_id)
 
         initViews(view)
 
@@ -292,4 +331,5 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
         private const val DEFAULT_ZOOM = 10
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
     }
+
 }

@@ -66,7 +66,7 @@ class HostPart5Fragment : Fragment(), ServiceListInterface {
             roomModel.beds = slider_beds.value.toInt()
             roomModel.total_bathrooms = slider_bathroom.value.toInt()
             roomModel.total_capacity = slider_guest.value.toInt()
-            roomModel.rooms = slider_guest.value.toInt()
+            roomModel.rooms = slider_rooms.value.toInt()
 
             pvm.setRoomObject(roomModel)
             pvm.setServices(list)
@@ -87,6 +87,7 @@ class HostPart5Fragment : Fragment(), ServiceListInterface {
         slider_bathroom = view.findViewById(R.id.slider_bathroom)
         slider_beds = view.findViewById(R.id.slider_beds)
         slider_guest = view.findViewById(R.id.slider_guest)
+        slider_rooms = view.findViewById(R.id.slider_rooms)
     }
 
     override fun onServiceSelected(model: ServiceListModel) {

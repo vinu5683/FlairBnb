@@ -15,6 +15,10 @@ public class LocalKeys {
     public static final String KEY_USER_LOGIN_TYPE = "KEYS_LOGIN_TYPE_USER";
     public static final String KEY_USER_CITY_LAT = "KEYS_CITY_OF_USER_LAT";
     public static final String KEY_USER_CITY_LONG = "KEYS_CITY_OF_USER_LONG";
+    public static final String CHECK_IN_TIME = "KEYS_CHECK_IN_WITH_MILI";
+    public static final String CHECK_OUT_TIME = "KEYS_CHECK_OUT_WITH_MILI";
+    public static final String NUMBER_OF_DAYS = "NUMBER_OF_DAYS";
+
 
     public static ArrayList<SubCategoryModel> getHouseSubCategoryList() {
         ArrayList<SubCategoryModel> list = new ArrayList<SubCategoryModel>();

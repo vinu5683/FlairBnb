@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.FlairBnbApp" parent="Theme.MaterialComponents.Light">
         <item name="windowActionBar">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+
         <item name="windowNoTitle">true</item>
         <item name="android:fontFamily">@font/varela</item>
         <!-- Primary brand color. -->

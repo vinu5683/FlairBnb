@@ -16,6 +16,7 @@ class PlacesViewModel @Inject public constructor(
 ) : ViewModel() {
 
     var listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
+    var currentPlaceUser = MutableLiveData<UserModel>()
 
     fun getTheSelectedRoom(): RoomModel {
         return repository.selectedRoom
@@ -44,9 +45,9 @@ class PlacesViewModel @Inject public constructor(
         repository.selectedRoom = roomModel
     }
 
-    fun getUserNameById(hostId: String?): MutableLiveData<UserModel> {
+    fun getUserNameById(hostId: String?) {
         repository.getUserNameById(hostId)
-        return repository.currentPlaceUser
+        currentPlaceUser = repository.currentPlaceUser
     }
 
 }
