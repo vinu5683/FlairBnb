@@ -147,8 +147,6 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:maxLength="10"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
@@ -167,8 +165,6 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:maxLength="10"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 
@@ -187,8 +183,6 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:maxLength="10"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
 

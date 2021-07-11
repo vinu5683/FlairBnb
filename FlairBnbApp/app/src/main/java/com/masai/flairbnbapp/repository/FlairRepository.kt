@@ -12,12 +12,14 @@ import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.UserModel
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 
 
 class FlairRepository {
 
     var selectedRoom: RoomModel = RoomModel()
     val isSaveDone: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val allCities: MutableLiveData<HashSet<String>> = MutableLiveData<HashSet<String>>()
 
     init {
         isSaveDone.value = false
@@ -163,6 +165,28 @@ class FlairRepository {
         roomServiceList = l
     }
 
+    fun getAllPlacesList() {
+        dbRootReference.getReference("places")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        try {
+                            allCities.value?.clear()
+                            snapshot.children.forEach {
+                                allCities.value?.add(it.child("city").value.toString())
+                            }
+                        } catch (e: Exception) {
+
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+    }
+
     val listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
 
     fun getPlaces(criteria: HashMap<String, String>) {
@@ -177,7 +201,9 @@ class FlairRepository {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             snapshot.children.forEach {
-                                if (it.child("city").value?.equals(city)!!) {
+                                if (it.child("city").value?.toString()?.trim()?.lowercase()
+                                        .equals(city.trim().lowercase())!!
+                                ) {
                                     val x = it.getValue(
                                         RoomModel::class.java
                                     )
@@ -199,7 +225,9 @@ class FlairRepository {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             snapshot.children.forEach {
-                                if (it.child("state").value?.equals(state)!!) {
+                                if (it.child("state").value?.toString()?.trim()?.lowercase()
+                                        .equals(state.trim().lowercase())
+                                ) {
                                     val x = it.getValue(
                                         RoomModel::class.java
                                     )

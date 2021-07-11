@@ -36,7 +36,7 @@ class SearchListViewHolder(itemView: View, val searchListInterface: SearchListIn
 
     val textview: TextView = itemView.findViewById(R.id.search_list_item_text)
     val cardView: CardView = itemView.findViewById(R.id.search_item_card)
-    val latLng: LatLng = searchListInterface.getLagLang()
+    private val latLng: LatLng = searchListInterface.getLagLang()
 
     fun setData(roomModel: RoomModel) {
         val results = FloatArray(1)

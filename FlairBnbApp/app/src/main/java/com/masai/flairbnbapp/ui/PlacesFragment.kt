@@ -2,11 +2,16 @@ package com.masai.flairbnbapp.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -27,8 +32,10 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -165,10 +172,10 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(activity?.applicationContext!!)
         if (ActivityCompat.checkSelfPermission(
-                view.context,
+                requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                view.context,
+                requireActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
@@ -196,11 +203,20 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
                             long.toDouble(),
                             1
                         )
-                    if (addresses.isNotEmpty()) {
-                        hashCriteria["city"] = addresses[0].locality.toString() ?: ""
-                        Log.d("TAG", "getTheCurrentLocation: " + hashCriteria["city"])
-                        hashCriteria["state"] = addresses[0].adminArea.toString() ?: ""
-                        hashCriteria["country"] = addresses[0].countryName.toString() ?: ""
+                    when {
+                        ExploreFragment.placesCriteria != null -> {
+                            hashCriteria["city"] = ExploreFragment.placesCriteria["city"].toString()
+                        }
+                        addresses.isNotEmpty() -> {
+                            hashCriteria["city"] = addresses[0].locality.toString() ?: ""
+                            hashCriteria["state"] = addresses[0].adminArea.toString() ?: ""
+                            hashCriteria["country"] = addresses[0].countryName.toString() ?: ""
+                        }
+                        else -> {
+                            hashCriteria["city"] = "bengaluru"
+                            hashCriteria["state"] = "karnataka"
+                            hashCriteria["country"] = "india"
+                        }
                     }
                     placesViewModel.getListOfPlaces(hashCriteria)
                         .observe(viewLifecycleOwner, { itList ->
@@ -211,19 +227,32 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
                         })
                 }
             }
+        } else {
+            if (ExploreFragment.placesCriteria != null) {
+                hashCriteria["city"] = ExploreFragment.placesCriteria["city"].toString()
+            }
+            placesViewModel.getListOfPlaces(hashCriteria)
+                .observe(viewLifecycleOwner, { itList ->
+                    if (itList != null) {
+                        list = itList
+                        setFurtherStuff(list)
+                    }
+                })
         }
     }
 
     private fun setFurtherStuff(list: java.util.ArrayList<RoomModel>) {
         adapter = PlacesListAdapter(list, this)
         adapter_hr = HorizontalPlaceListAdapter(list, this)
-        Log.d("TAG", "onViewCreatedasd: " + list.toString())
         rvPlacesFragment.adapter = adapter
         adapter.notifyDataSetChanged()
         rvPlaces_Hr.adapter = adapter_hr
         adapter_hr.notifyDataSetChanged()
         setMarkersOnMap(list)
         rvPlacesFragment.hideShimmer()
+        if (list.size > 0) {
+            moveCamera(list[0].location_lat?.toDouble()!!, list[0].location_long?.toDouble()!!, 12)
+        }
     }
 
     private fun setMarkersOnMap(list: java.util.ArrayList<RoomModel>) {
@@ -319,7 +348,6 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         view.findViewById<ImageButton>(R.id.btnSettingPlaceFragment).setOnClickListener {
             //open new fragment
         }
-
     }
 
     private fun getLocationPermission() {
@@ -330,11 +358,56 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
             == PackageManager.PERMISSION_GRANTED
         ) {
             locationPermissionGranted = true
+            turnGPSOn()
+            displayLocationSettingsRequest(requireActivity())
         } else {
             ActivityCompat.requestPermissions(
-                activity?.parent!!, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             )
+        }
+    }
+
+    private fun displayLocationSettingsRequest(context: Context) {
+        val googleApiClient = GoogleApiClient.Builder(context)
+            .addApi(LocationServices.API).build()
+        googleApiClient.connect()
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = (10000 / 2).toLong()
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback {
+            val status: Status = it.status
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.SUCCESS -> Log.i(
+                    "TAG",
+                    "All location settings are satisfied."
+                )
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                    Log.i(
+                        "TAG",
+                        "Location settings are not satisfied. Show the user a dialog to upgrade location settings "
+                    )
+                    try {
+                        // Show the dialog by calling startResolutionForResult(), and check the result
+                        // in onActivityResult().
+                        status.startResolutionForResult(
+                            requireActivity(),
+                            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                        )
+                    } catch (e: IntentSender.SendIntentException) {
+                        Log.i("TAG", "PendingIntent unable to execute request.")
+                    }
+                }
+                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> Log.i(
+                    "TAG",
+                    "Location settings are inadequate, and cannot be fixed here. Dialog not created."
+                )
+            }
         }
     }
 
@@ -354,6 +427,7 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     locationPermissionGranted = true
+                    displayLocationSettingsRequest(requireActivity())
                 }
             }
         }
@@ -405,6 +479,8 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         private const val KEY_CAMERA_POSITION = "camera_position"
         private const val DEFAULT_ZOOM = 13
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        var check_in: Date? = null
+        var check_out: Date? = null
     }
 
     @ExperimentalTime
@@ -416,7 +492,18 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
 
     @ExperimentalTime
     private fun showDateTimeRangePicker() {
+        if (check_in != null && check_out != null) {
+            val format: Format = SimpleDateFormat("yyyy MMM dd")
 
+            Log.d("TAG", "showDateTimeRangePicker: ${setTheCheckinCheckoutTime("12")}")
+
+            Log.d(
+                "TAG",
+                "showDateTimeRangePicker: ${format.format(check_in)} \n ${format.format(check_out)}"
+            )
+            navController.navigate(R.id.action_placesFragment_to_placeDetailsFragment)
+            return;
+        }
         val calender: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         calender.clear()
 
@@ -436,8 +523,8 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         val materialDatePicker = mBuilder.build()
         materialDatePicker.show(activity?.supportFragmentManager!!, "DATE_PIKER")
         materialDatePicker.addOnPositiveButtonClickListener {
-            val check_in = Date(it.first)
-            val check_out = Date(it.second)
+            check_in = Date(it.first)
+            check_out = Date(it.second)
             val format: Format = SimpleDateFormat("yyyy MMM dd")
 
             PreferenceHelper.writeStringToPreference(
@@ -590,6 +677,22 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         return true
     }
 
+    private fun turnGPSOn() {
+        val provider: String = Settings.Secure.getString(
+            activity?.contentResolver,
+            Settings.Secure.LOCATION_PROVIDERS_ALLOWED
+        )
+        if (!provider.contains("gps")) { //if gps is disabled
+            val poke = Intent()
+            poke.setClassName(
+                "com.android.settings",
+                "com.android.settings.widget.SettingsAppWidgetProvider"
+            )
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE)
+            poke.data = Uri.parse("3")
+            activity?.sendBroadcast(poke)
+        }
+    }
 
 }
 

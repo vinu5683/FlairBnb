@@ -1,6 +1,9 @@
 package com.masai.flairbnbapp.localdatabases;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.masai.flairbnbapp.R;
+import com.masai.flairbnbapp.models.CityModel;
+import com.masai.flairbnbapp.models.LiveAnywhereModel;
 import com.masai.flairbnbapp.models.ServiceListModel;
 import com.masai.flairbnbapp.models.SubCategoryModel;
 
@@ -18,6 +21,8 @@ public class LocalKeys {
     public static final String CHECK_IN_TIME = "KEYS_CHECK_IN_WITH_MILI";
     public static final String CHECK_OUT_TIME = "KEYS_CHECK_OUT_WITH_MILI";
     public static final String NUMBER_OF_DAYS = "NUMBER_OF_DAYS";
+
+    public static LatLng my_location = null;
 
 
     public static ArrayList<SubCategoryModel> getHouseSubCategoryList() {
@@ -291,5 +296,26 @@ public class LocalKeys {
             default:
                 return R.drawable.ic_baseline_settings_24;
         }
+    }
+
+
+    public static ArrayList<CityModel> getAllCityModels() {
+        ArrayList<CityModel> list = new ArrayList<>();
+        list.add(new CityModel("Bengaluru", R.drawable.bengaluru));
+        list.add(new CityModel("Kochi", R.drawable.kochi));
+        list.add(new CityModel("Puducherry", R.drawable.puducherry));
+        list.add(new CityModel("Canacona", R.drawable.canacona));
+        list.add(new CityModel("Benaulim", R.drawable.benaulim));
+        list.add(new CityModel("Majorda", R.drawable.majorda));
+        return list;
+    }
+
+    public static ArrayList<LiveAnywhereModel> getAllLiveAnywhereModels() {
+        ArrayList<LiveAnywhereModel> list = new ArrayList<>();
+        list.add(new LiveAnywhereModel("Outdoor gateways", R.drawable.outdoor_gateways));
+        list.add(new LiveAnywhereModel("Unique stays", R.drawable.unique_stays));
+        list.add(new LiveAnywhereModel("Entire homes", R.drawable.entire_house));
+        list.add(new LiveAnywhereModel("Pets allowed", R.drawable.pets_allowed));
+        return list;
     }
 }
