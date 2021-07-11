@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/part2Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_animation"
+    android:foreground="@drawable/ripple_effect"
+    tools:context=".ui.HostPart1Fragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center|start"
+        android:paddingStart="10dp"
+        android:text="What kind of place will you host?"
+        android:textColor="@color/white"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/part2Card" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/part2Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp"
+        app:cardCornerRadius="16dp"
+
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="15dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_cat_flat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:padding="6dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:paddingStart="16sp"
+                        android:text="Flat"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/flat" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cat_house"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:padding="6dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:paddingStart="16sp"
+                        android:text="House"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/house" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cat_secondaryunit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:padding="6dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:paddingStart="16sp"
+                        android:text="Secondary unit"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/secondryunit" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cat_uniquespace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:padding="6dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:paddingStart="16sp"
+                        android:text="Unique space"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/uniquespace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cat_bed_and_breakfast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:padding="6dp">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:paddingStart="16sp"
+                        android:text="Bed and breakfast"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/bedandbreakfast" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_cat_boutique"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:foreground="@drawable/ripple_effect"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:padding="6dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:maxLines="1"
+                        android:paddingStart="16sp"
+                        android:text="Boutique Hotel"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/boutiquehotel" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnNext3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:text="Next"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

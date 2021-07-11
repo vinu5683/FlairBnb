@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.PlaceDetailsFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/carouselImagesPlaceDetails"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.smarteist.autoimageslider.SliderView>
+
+            <TextView
+                android:id="@+id/tvImagePosition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/image_count_bg"
+                android:padding="5dp"
+                android:text="1/23"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/carouselImagesPlaceDetails"
+                app:layout_constraintEnd_toEndOf="@id/carouselImagesPlaceDetails" />
+
+            <TextView
+                android:id="@+id/title_place_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:maxLines="2"
+                android:paddingStart="16dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                android:text="Sweet Home, Peaceful stay at Bengaluru North."
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintTop_toBottomOf="@id/carouselImagesPlaceDetails" />
+
+            <TextView
+                android:id="@+id/reviewsAddress_places_Details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:drawablePadding="4dp"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                android:text="4.73(71 reviews) · Bengaluru, Karnataka, India"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_baseline_star_24"
+                app:layout_constraintTop_toBottomOf="@id/title_place_details" />
+
+            <View
+                android:id="@+id/view_bar_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/reviewsAddress_places_Details" />
+
+
+            <TextView
+                android:id="@+id/roomSpaceType_place_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:maxLines="2"
+                android:paddingStart="16dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:text="Entire serviced apartment hosted by Aloha"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/view_bar_1" />
+
+            <TextView
+                android:id="@+id/typeShortDec_places_Details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:drawablePadding="4dp"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:text="Entire serviced Apartment"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/roomSpaceType_place_details" />
+
+            <TextView
+                android:id="@+id/guest_bbb_places_Details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:drawablePadding="4dp"
+                android:maxLines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                android:text="3 guests · 1 bedroom · 2 beds · 1 bathroom"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/typeShortDec_places_Details" />
+
+            <View
+                android:id="@+id/view_bar_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/guest_bbb_places_Details" />
+
+            <RelativeLayout
+                android:id="@+id/cleanAndTidy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="64dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@id/view_bar_2">
+
+                <ImageView
+                    android:id="@+id/clean_and_tidy_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_noun_clean_tidy" />
+
+                <TextView
+                    android:id="@+id/clean_and_tidt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/clean_and_tidy_image"
+                    android:maxLines="1"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="16dp"
+                    android:text="Clean and tidy"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/clean_and_tidy_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/clean_and_tidt_title"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toEndOf="@id/clean_and_tidy_image"
+                    android:maxLines="2"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="6 recent guests said this place was sparkling clean"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/GreatLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="64dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@id/cleanAndTidy">
+
+                <ImageView
+                    android:id="@+id/greatLocation_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_baseline_location_on_40" />
+
+                <TextView
+                    android:id="@+id/greatLocation_title"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_toEndOf="@id/greatLocation_image"
+                    android:maxLines="1"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="16dp"
+                    android:text="Great location"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/great_location_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/greatLocation_title"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toEndOf="@id/greatLocation_image"
+                    android:maxLines="2"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="100% recent guests gave the location 5 stars"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/greatCheckinExperience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:minHeight="64dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@id/GreatLocation">
+
+                <ImageView
+                    android:id="@+id/greatCheckinExperience_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_noun_keys_1613708" />
+
+                <TextView
+                    android:id="@+id/greatCheckinExperience_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/greatCheckinExperience_image"
+                    android:maxLines="1"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="16dp"
+                    android:text="Great check-in experience"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/greatCheckinExperience_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/greatCheckinExperience_title"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toEndOf="@id/greatCheckinExperience_image"
+                    android:maxLines="2"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="100% recent guests gave the check-in process a 5 star rating"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_bar_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/greatCheckinExperience" />
+
+            <LinearLayout
+                android:id="@+id/first_ll_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar_3">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="·"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Entire home to yourself"
+                    android:textColor="@color/graytextblack"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/second_ll_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/first_ll_points">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="·"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Self check-in"
+                    android:textColor="@color/graytextblack"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/third_ll_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/second_ll_points">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="·"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvFreeCancellationDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Free cancellation before 12 Jul"
+                    android:textColor="@color/graytextblack"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_bar_4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/third_ll_point" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_all_about_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar_4">
+
+                <TextView
+                    android:id="@+id/tvAllAboutSomeOnePlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="All about Someone's place"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAllAboutSomeOnePlaceDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:maxLines="6"
+                    android:text="You'll love my place because of everything has its place in the middle of chaos. The place where time seems to stand still and you can relate all of your stress, letting the wind blow away."
+                    android:textColor="@color/graytextblack"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnAllAboutDescShowMore"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_0"
+                    android:text="Show more >" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_bar_5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/ll_all_about_place" />
+
+            <TextView
+                android:id="@+id/caption_whatThisPlaceOffers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                android:text="What this place offers"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/view_bar_5" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_serviceList_place_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                app:layout_constraintTop_toBottomOf="@+id/caption_whatThisPlaceOffers" />
+
+            <TextView
+                android:id="@+id/showAllAmenities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/outlined_button"
+                android:foreground="@drawable/ripple_effect"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Show all 12 amenities"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/rv_serviceList_place_details" />
+
+            <View
+                android:id="@+id/view_bar_6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/showAllAmenities" />
+
+            <TextView
+                android:id="@+id/caption_whereyoullbe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="6dp"
+                android:text="Where you'll be"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/view_bar_6" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_place_details_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintTop_toBottomOf="@id/caption_whereyoullbe">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <fragment
+                        android:id="@+id/map_where_you_will_be"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp" />
+
+                    <TextView
+                        android:id="@+id/approxDistance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Approx Distance: 12Km"
+                        android:textColor="@color/graytextblack" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/view_bar_7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/card_place_details_map" />
+
+            <RelativeLayout
+                android:id="@+id/rl_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar_7">
+
+                <TextView
+                    android:id="@+id/caption_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/ib_a"
+                    android:text="Availability"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAvailability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/caption_a"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/ib_a"
+                    android:text="13 - 14 Jul"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/ib_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_baseline_chevron_right_24" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_bar_8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/rl_a" />
+
+            <RelativeLayout
+                android:id="@+id/rl_b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar_8">
+
+                <TextView
+                    android:id="@+id/caption_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/ib_b"
+                    android:text="House rules"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHouseRules"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/caption_b"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/ib_b"
+                    android:text="Check-in after 2:00 pm"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/ib_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_baseline_chevron_right_24" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_bar_9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/rl_b" />
+
+            <RelativeLayout
+                android:id="@+id/rl_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar_9">
+
+                <TextView
+                    android:id="@+id/caption_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/ib_c"
+                    android:text="Health &amp; safety"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHealthSafty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/caption_c"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/ib_c"
+                    android:paddingEnd="20dp"
+                    android:text="Flairbnb's social distancing and other COVID-19-related guidelines apply."
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/ib_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_baseline_chevron_right_24" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_bar_10"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/rl_c" />
+
+            <RelativeLayout
+                android:id="@+id/rl_d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/view_bar_10">
+
+                <TextView
+                    android:id="@+id/caption_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/ib_d"
+                    android:text="Cancellation policy"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCacelationPolicy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/caption_d"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/ib_d"
+                    android:paddingEnd="20dp"
+                    android:text="Free cancellation before 12 Jul"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/ib_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_baseline_chevron_right_24" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view_bar_11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c4c4c4"
+                app:layout_constraintTop_toBottomOf="@+id/rl_d" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/backPlaceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp"
+            app:rippleColor="?attr/colorPrimary">
+
+            <ImageButton
+                android:id="@+id/backBtnPlaceDetails"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:foreground="@drawable/ripple_effect"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sharePlaceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_toStartOf="@+id/likePlaceDetails"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:contentDescription=""
+            android:focusable="true"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp"
+            app:rippleColor="?attr/colorPrimary">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:src="@drawable/ic_noun_share" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/likePlaceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:contentDescription=""
+            android:focusable="true"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp"
+            app:rippleColor="?attr/colorPrimary">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:src="@drawable/ic_noun_heart_normal_place" />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/tvCostAndForWhat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹2,000 / night"
+                android:textColor="@color/graytextblack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFromToDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13 Jul - 14 Jul"
+                android:textColor="@color/graytextblack"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnReserve"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:text="Reserve"
+            android:textAllCaps="false"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

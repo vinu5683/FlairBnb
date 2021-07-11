@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/part5Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_animation"
+    tools:context=".ui.HostPart5Fragment">
+
+    <TextView
+        android:id="@+id/rtyhgt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center|start"
+        android:paddingStart="10dp"
+        android:text="What kind of space and services\nwill guests have?"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/part5Card"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/part5Card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="30dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rtyhgt">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="Rooms"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_rooms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Number Of Beds"
+                        android:stepSize="1.0"
+                        android:value="1"
+                        android:valueFrom="0"
+                        android:valueTo="12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_guests"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="Guests"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_guest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Number Of Guests"
+                        android:stepSize="1.0"
+                        android:value="1"
+                        android:valueFrom="0"
+                        android:valueTo="16" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_beds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="Beds"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_beds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Number Of Beds"
+                        android:stepSize="1.0"
+                        android:value="1"
+                        android:valueFrom="0"
+                        android:valueTo="32" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_bathroom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/roundrectangle_gray"
+                    android:minHeight="?attr/minTouchTargetSize"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:text="Bathrooms"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/slider_bathroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Number Of Beds"
+                        android:stepSize="1.0"
+                        android:value="1"
+                        android:valueFrom="0"
+                        android:valueTo="16" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="#E4E4E4" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/aaskjdhlsd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center|start"
+                        android:paddingStart="15dp"
+                        android:text="Select the services."
+                        android:textColor="@color/black"
+                        android:textSize="22dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPart5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnNext6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="Next"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

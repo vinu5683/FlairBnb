@@ -11,10 +11,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,11 +28,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.masai.flairbnbapp.R
 import com.masai.flairbnbapp.models.RoomModel
+import com.masai.flairbnbapp.viewmodels.HostPlaceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_host_part1.*
 import java.util.*
@@ -39,12 +46,13 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
     private var location: String = "123"
 
+    private val placeViewModel by viewModels<HostPlaceViewModel>()
+
     private var map: GoogleMap? = null
     private var cameraPosition: CameraPosition? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
     private var locationPermissionGranted = false
-    private val options = MarkerOptions()
 
 
     override fun onCreateView(
@@ -55,16 +63,13 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.fragment_host_part1, container, false)
     }
 
+    lateinit var v: View
     val roomModel = initModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //// Get input text
-        //val inputText = outlinedTextField.editText?.text.toString()
-        //
-        //outlinedTextField.editText?.doOnTextChanged { inputText, _, _, _ ->
-        //    // Respond to input text change
-        //}
+        v = view
+        val navController = Navigation.findNavController(view)
         getLocationPermission()
         if (savedInstanceState != null) {
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION)
@@ -75,6 +80,17 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             .findFragmentById(R.id.pickLocationMap) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
         showCurrentPlace()
+
+        view.findViewById<Button>(R.id.btnNext2).setOnClickListener {
+            if (location != "123" && location != "") {
+                placeViewModel.setRoomObject(roomModel)
+                navController.navigate(R.id.action_hostPart1Fragment_to_hostPart2Fragment)
+                Log.d("TAG", "SetRoomObject Done" + roomModel.toString())
+            } else {
+                Toast.makeText(view.context, "Please Select the Location", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
     }
 
@@ -96,17 +112,18 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
 
     private fun initModel(): RoomModel {
         return RoomModel(
-            id = "",
+            id = System.currentTimeMillis().toString() + (Math.random() * 2231).toInt().toString(),
             title = "",
             description = "",
             category = "",
+            subCategory = "",
+            roomSpaceType = "",
             price = 0,
             priceForWhat = "",
-            image_blob_id = "",
             location_lat = "",
             location_long = "",
             host_id = "",
-            listOfAvailableServices = null,
+            services = null,
             rating = 0,
             rooms = 0,
             total_capacity = 0,
@@ -117,6 +134,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             city = "",
             state = "",
             country = "",
+            images = null,
         )
     }
 
@@ -131,6 +149,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         getLocationPermission()
         this.map = map
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(v.context, R.raw.map_styles));
 
         map.setOnMapClickListener(GoogleMap.OnMapClickListener { latLng -> // Creating a marker
             val markerOptions = MarkerOptions()
@@ -145,51 +164,20 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
 
             // Clears the previously touched position
-            map?.clear()
+            map.clear()
 
             // Animating to the touched position
-            map?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+            map.animateCamera(CameraUpdateFactory.newLatLng(latLng))
 
             // Placing a marker on the touched position
-            map?.addMarker(markerOptions)
-            val geoCoder = Geocoder(this.context, Locale.getDefault())
-            val addresses: List<Address> =
-                geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            if (addresses.isNotEmpty()) {
-
-            }
-            searchEditText.editText?.setText(addresses[0].locality.toString() + "\n" + addresses[0].adminArea.toString() + "\n" + addresses[0].countryName.toString())
+            map.addMarker(markerOptions)
 
         })
 
         updateLocationUI()
-
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation()
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    private fun getDeviceLocation() {
-        try {
-            if (locationPermissionGranted) {
-                val locationResult = fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener(activity?.mainExecutor!!) { task ->
-                    if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
-                    } else {
-                        Log.d("TAG", "Current location is null. Using defaults.")
-                        Log.e("TAG", "Exception: %s", task.exception)
-                        map?.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
-                        )
-                    }
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -218,26 +206,13 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             return
         }
         if (locationPermissionGranted) {
-            // Use fields to define the data types to return.
             val placeFields = listOf(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
 
-            // Use the builder to create a FindCurrentPlaceRequest.
             val request = FindCurrentPlaceRequest.newInstance(placeFields)
 
-            // Get the likely places - that is, the businesses and other points of interest that
-            // are the best match for the device's current location.
         } else {
-            // The user has not granted permission.
             Log.i("TAG", "The user did not grant location permission.")
 
-            // Add a default marker, because the user hasn't selected a place.
-            map?.addMarker(
-                MarkerOptions()
-                    .title("title")
-                    .position(defaultLocation)
-                    .snippet("snippet")
-            )
-            // Prompt the user for permission.
             getLocationPermission()
         }
     }
@@ -258,15 +233,5 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
         }
-    }
-
-    fun moveCamera() {
-
-        val ll = ""
-
-        map?.moveCamera(
-            CameraUpdateFactory
-                .newLatLngZoom(LatLng(ll[0].toDouble(), ll[1].toDouble()), DEFAULT_ZOOM.toFloat())
-        )
     }
 }

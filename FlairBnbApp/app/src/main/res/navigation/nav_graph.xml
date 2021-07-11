@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_loginFragment_to_confirmOTPFragment"
             app:destination="@id/confirmOTPFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_addInfoFragment"
+            app:destination="@id/addInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmOTPFragment"
@@ -65,6 +68,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_hostPart1Fragment"
             app:destination="@id/hostPart1Fragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_placesFragment"
+            app:destination="@id/placesFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -90,5 +96,81 @@
         android:id="@+id/hostPart1Fragment"
         android:name="com.masai.flairbnbapp.ui.HostPart1Fragment"
         android:label="fragment_host_part1"
-        tools:layout="@layout/fragment_host_part1" />
+        tools:layout="@layout/fragment_host_part1" >
+        <action
+            android:id="@+id/action_hostPart1Fragment_to_hostPart2Fragment"
+            app:destination="@id/hostPart2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart3Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart3Fragment"
+        android:label="fragment_host_part3"
+        tools:layout="@layout/fragment_host_part3" >
+        <action
+            android:id="@+id/action_hostPart3Fragment_to_hostPart4Fragment"
+            app:destination="@id/hostPart4Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart4Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart4Fragment"
+        android:label="fragment_host_part4"
+        tools:layout="@layout/fragment_host_part4" >
+        <action
+            android:id="@+id/action_hostPart4Fragment_to_hostPart5Fragment"
+            app:destination="@id/hostPart5Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart2Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart2Fragment"
+        android:label="HostPart2Fragment" >
+        <action
+            android:id="@+id/action_hostPart2Fragment_to_hostPart3Fragment"
+            app:destination="@id/hostPart3Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart5Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart5Fragment"
+        android:label="fragment_host_part5"
+        tools:layout="@layout/fragment_host_part5" >
+        <action
+            android:id="@+id/action_hostPart5Fragment_to_hostPart6Fragment"
+            app:destination="@id/hostPart6Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart6Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart6Fragment"
+        android:label="fragment_host_part6"
+        tools:layout="@layout/fragment_host_part6" >
+        <action
+            android:id="@+id/action_hostPart6Fragment_to_hostPart7Fragment"
+            app:destination="@id/hostPart7Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hostPart7Fragment"
+        android:name="com.masai.flairbnbapp.ui.HostPart7Fragment"
+        android:label="fragment_host_part7"
+        tools:layout="@layout/fragment_host_part7" >
+        <action
+            android:id="@+id/action_hostPart7Fragment_to_myHostPlacesFragment"
+            app:destination="@id/myHostPlacesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myHostPlacesFragment"
+        android:name="com.masai.flairbnbapp.ui.MyHostPlacesFragment"
+        android:label="fragment_my_host_places"
+        tools:layout="@layout/fragment_my_host_places" />
+    <fragment
+        android:id="@+id/placesFragment"
+        android:name="com.masai.flairbnbapp.ui.PlacesFragment"
+        android:label="fragment_places"
+        tools:layout="@layout/fragment_places" >
+        <action
+            android:id="@+id/action_placesFragment_to_placeDetailsFragment"
+            app:destination="@id/placeDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/placeDetailsFragment"
+        android:name="com.masai.flairbnbapp.ui.PlaceDetailsFragment"
+        android:label="fragment_place_details"
+        tools:layout="@layout/fragment_place_details" />
 </navigation>

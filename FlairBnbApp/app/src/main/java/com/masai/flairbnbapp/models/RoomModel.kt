@@ -1,25 +1,36 @@
 package com.masai.flairbnbapp.models
 
+
 data class RoomModel(
     val id: String?,
-    val title: String?,
-    val description: String?,
-    val category: String?,
-    val price: Long?,
-    val priceForWhat: String?,
-    val image_blob_id: String?,
+    var title: String?,
+    var description: String?,
+    var category: String?,
+    var roomSpaceType: String?,
+    var subCategory: String?,
+    var price: Long?,
+    var priceForWhat: String?,
     var location_lat: String?,
     var location_long: String?,
-    val host_id: String?,
-    val listOfAvailableServices: String?,
+    var host_id: String?,
+    val services: ArrayList<String>?,
     val rating: Int?,
-    val rooms: Int?,
-    val total_capacity: Int?,
-    val total_bathrooms: Int?,
-    val beds: Int?,
+    var rooms: Int?,
+    var total_capacity: Int?,
+    var total_bathrooms: Int?,
+    var beds: Int?,
     val maxMembers: Int?,
-    val contactNo: String?,
-    val city: String?,
-    val state: String?,
-    val country: String?,
-)
+    var contactNo: String?,
+    var city: String?,
+    var state: String?,
+    var country: String?,
+    val images: ArrayList<String>?,
+) {
+    constructor() : this(
+        null,
+        null,
+        null, null, null, null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null,
+        null, null, null, null
+    )
+}
