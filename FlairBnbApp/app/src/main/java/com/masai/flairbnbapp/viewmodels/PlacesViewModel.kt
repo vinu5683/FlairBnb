@@ -3,6 +3,7 @@ package com.masai.flairbnbapp.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.masai.flairbnbapp.models.BookPlaceModel
 import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.UserModel
 import com.masai.flairbnbapp.repository.FlairRepository
@@ -17,6 +18,7 @@ class PlacesViewModel @Inject public constructor(
 
     var listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
     var currentPlaceUser = MutableLiveData<UserModel>()
+    var presentBillPlace = MutableLiveData<RoomModel>()
 
     fun getTheSelectedRoom(): RoomModel {
         return repository.selectedRoom
@@ -41,6 +43,14 @@ class PlacesViewModel @Inject public constructor(
         return repository.searchRoomList
     }
 
+    fun getPlaceById(placeId: String): MutableLiveData<RoomModel> {
+        viewModelScope.launch {
+            repository.getPlaceById(placeId)
+            presentBillPlace = repository.tempPlace
+        }
+        return presentBillPlace
+    }
+
     fun setTheSelectedRoomModel(roomModel: RoomModel) {
         repository.selectedRoom = roomModel
     }
@@ -48,6 +58,10 @@ class PlacesViewModel @Inject public constructor(
     fun getUserNameById(hostId: String?) {
         repository.getUserNameById(hostId)
         currentPlaceUser = repository.currentPlaceUser
+    }
+
+    fun bookroom(bookPlaceModel: BookPlaceModel) {
+        repository.bookRoom(bookPlaceModel)
     }
 
 }

@@ -8,8 +8,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.masai.flairbnbapp.models.BookPlaceModel
 import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.UserModel
+import com.masai.flairbnbapp.models.WishlistModel
+import com.masai.flairbnbapp.ui.WishlistsFragment
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
@@ -17,6 +20,9 @@ import kotlin.collections.HashSet
 
 class FlairRepository {
 
+    val bookPlaceModels: MutableLiveData<ArrayList<BookPlaceModel>> = MutableLiveData()
+    val listOfMyWishListPlaces: MutableLiveData<ArrayList<RoomModel>> =
+        MutableLiveData<ArrayList<RoomModel>>()
     var selectedRoom: RoomModel = RoomModel()
     val isSaveDone: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val allCities: MutableLiveData<HashSet<String>> = MutableLiveData<HashSet<String>>()
@@ -53,7 +59,6 @@ class FlairRepository {
             val uri: Uri = imageList[i]
             uploadTask(roomModel, uri, roomModel.id, i)
         }
-
     }
 
     private fun uploadTask(roomModel: RoomModel, uri: Uri, shopId: String?, i: Int) {
@@ -125,7 +130,6 @@ class FlairRepository {
 
 
     fun getUserModel(userId: String) {
-
         FirebaseDatabase.getInstance().getReference("users").child(userId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -143,6 +147,7 @@ class FlairRepository {
                             snapshot.child("token").value.toString(),
                             snapshot.child("loginType").value.toString(),
                         )
+                        getMyWishListData(userId)
                     }
                 }
 
@@ -343,4 +348,117 @@ class FlairRepository {
 
             })
     }
+
+    fun getMyWishListData(uid: String) {
+        listOfMyWishListPlaces.value?.clear()
+        val x: ArrayList<RoomModel> = ArrayList()
+        dbRootReference.getReference("wishlist").child(uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        snapshot.children.forEach {
+                            val placeId = it.child("placeId").value.toString()
+                            dbRootReference.getReference("places").child(placeId)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if (snapshot.exists()) {
+                                            x.add(snapshot.getValue(RoomModel::class.java)!!)
+                                        }
+                                        listOfMyWishListPlaces.value = x
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                    }
+
+                                })
+                        }
+
+//                        Log.d("TAG", "isnull: ${WishlistsFragment.wishlistData.value}")
+//                        Log.d("TAG", "isXnull: $x")
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
+    }
+
+    var isExistInWishlist = MutableLiveData<Boolean>()
+
+    fun addToWishList(uid: String?, id: String?): MutableLiveData<Boolean> {
+        isExistInWishlist.value = false;
+        dbRootReference.getReference("wishlist").child(uid!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        if (it.child("placeId").value == id!!) {
+                            isExistInWishlist.value = true
+                        }
+                    }
+                    if (!isExistInWishlist.value!!) {
+                        val x = WishlistModel(uid, id)
+                        dbRootReference.getReference("wishlist").child(uid).child(id!!)
+                            .setValue(x)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+        return isExistInWishlist
+    }
+
+    fun bookRoom(bookPlaceModel: BookPlaceModel) {
+        dbRootReference.getReference("orders").child(bookPlaceModel.userId!!)
+            .child(bookPlaceModel.id!!)
+            .setValue(bookPlaceModel).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("TAG", "bookRoom: Payment Done of ${bookPlaceModel.amount}")
+                } else {
+                    Log.d("TAG", "bookRoom: Payment Not Done for ${bookPlaceModel.amount}")
+                }
+            }
+    }
+
+    fun getAllMyOrders(userId: String) {
+        dbRootReference.getReference("orders").child(userId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val x = ArrayList<BookPlaceModel>()
+                        snapshot.children.forEach {
+                            x.add(it.getValue(BookPlaceModel::class.java)!!)
+                        }
+                        bookPlaceModels.value = x
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
+    }
+
+    val tempPlace = MutableLiveData<RoomModel>()
+
+    fun getPlaceById(id: String?) {
+        dbRootReference.getReference("places").child(id!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val x = snapshot.getValue(RoomModel::class.java)
+                        tempPlace.value = x
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+    }
 }
+

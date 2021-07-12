@@ -13,12 +13,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.masai.flairbnbapp.R
 import com.masai.flairbnbapp.databinding.ActivityMainBinding
 import com.masai.flairbnbapp.interfaces.NavigationToggleComponent
+import com.masai.flairbnbapp.localdatabases.LocalKeys
+import com.masai.flairbnbapp.localdatabases.PreferenceHelper
+import com.masai.flairbnbapp.models.BookPlaceModel
+import com.razorpay.PaymentResultListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavigationToggleComponent {
+class MainActivity : AppCompatActivity(), NavigationToggleComponent,
+    PaymentResultListener {
     private lateinit var binding: ActivityMainBinding
 
     companion object {
@@ -68,6 +73,14 @@ class MainActivity : AppCompatActivity(), NavigationToggleComponent {
     }
 
     override fun navigateToProfile() {
+
+    }
+
+    override fun onPaymentSuccess(p0: String?) {
+        PlaceDetailsFragment.onPaymentDoneInterface.onPaymentDone(p0!!)
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
 
     }
 }

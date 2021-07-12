@@ -105,13 +105,14 @@ class HostPart7Fragment : Fragment() {
             pvm.setSaveDone(false)
             roomModel.city = etPlaceCity.editText?.text.toString()
             roomModel.state = etPlaceState.editText?.text.toString()
-            roomModel.country = etPlaceState.editText?.text.toString()
+            roomModel.country = etPlaceCountry.editText?.text.toString()
             roomModel.contactNo = etPlaceContact.editText?.text.toString()
             roomModel.title = etPlaceName.editText?.text.toString()
             roomModel.description = etPlaceDescription.editText?.text.toString()
-            roomModel.host_id = "room model"
+            roomModel.host_id =
+                PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_GOOGLE_ID)
             roomModel.price = etPlacePrice.editText?.text.toString().toLong()
-            roomModel.priceForWhat = "Night stay"
+            roomModel.priceForWhat = "night"
             pvm.setRoomObject(roomModel)
 
             part6Card.visibility = View.GONE

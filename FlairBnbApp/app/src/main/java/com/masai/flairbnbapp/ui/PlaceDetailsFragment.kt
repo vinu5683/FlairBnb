@@ -2,23 +2,24 @@ package com.masai.flairbnbapp.ui
 
 import android.annotation.SuppressLint
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,24 +28,32 @@ import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.maps.android.ui.IconGenerator
 import com.masai.flairbnbapp.R
+import com.masai.flairbnbapp.interfaces.OnPaymentInterface
 import com.masai.flairbnbapp.localdatabases.LocalKeys
 import com.masai.flairbnbapp.localdatabases.PreferenceHelper
+import com.masai.flairbnbapp.models.BookPlaceModel
 import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.models.UserModel
 import com.masai.flairbnbapp.recyclerviews.ImageLoopAdapter
 import com.masai.flairbnbapp.recyclerviews.PlaceDetailsServiceListAdapter
-import com.masai.flairbnbapp.recyclerviews.PositionListenerInterface
 import com.masai.flairbnbapp.viewmodels.PlacesViewModel
+import com.masai.flairbnbapp.viewmodels.UsersViewModel
+import com.razorpay.Checkout
 import com.smarteist.autoimageslider.SliderView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_place_details.*
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
-class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+    OnPaymentInterface {
     val placesViewModel by viewModels<PlacesViewModel>()
+    val userViewModel by viewModels<UsersViewModel>()
 
     lateinit var v: View
     lateinit var selectedRoom: RoomModel
@@ -122,8 +131,10 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
             rv_serviceList_place_details.adapter = placeDetailsServiceAdapter
             placeDetailsServiceAdapter.notifyDataSetChanged()
             val price: String = if (selectedRoom.price!! > 999) {
-                (selectedRoom.price!! / 1000).toInt()
-                    .toString() + "," + (selectedRoom.price!! % 1000)
+                val x =
+                    (selectedRoom.price!!.toString().reversed().substring(0, 3) + ",").reversed()
+                val y = selectedRoom.price!!.toString().reversed().substring(3).reversed()
+                y + x
             } else
                 selectedRoom.price.toString()
             tvCostAndForWhat.text = "₹$price / night"
@@ -132,7 +143,6 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
 
             //
-
 
         } catch (e: Exception) {
             Log.d("TAG", "setDetails: " + e.printStackTrace())
@@ -157,7 +167,11 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
             tvFreeCancellationDate.text =
                 "Free cancellation before ${checkin[3] + " " + checkin[2]} 12AM"
             tvFromToDate.text =
-                "${checkin[3] + " " + checkin[2] + " - " + checkout[3] + " " + checkout[2]} (${PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS)} days)"
+                "${checkin[3] + " " + checkin[2] + " - " + checkout[3] + " " + checkout[2]} (${
+                    PreferenceHelper.readIntFromPreference(
+                        LocalKeys.NUMBER_OF_DAYS
+                    )
+                } days)"
         }
     }
 
@@ -227,6 +241,31 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
         }
 
         btnReserve.setOnClickListener {
+            val checkout = Checkout()
+            checkout.setKeyID("rzp_test_WX3sGwJbhsIfnd");
+            checkout.setImage(R.drawable.ic_noun_airbnb_colored)
+
+            val jsonObject = JSONObject()
+
+            try {
+                jsonObject.put("name", "Flairbnb")
+                jsonObject.put(
+                    "description",
+                    "Booking room place for ${PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS)} days"
+                )
+                jsonObject.put("theme.color", "#FD365B")
+                jsonObject.put("currency", "INR")
+                jsonObject.put(
+                    "amount",
+                    selectedRoom.price!! * PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS)
+                )
+                jsonObject.put("prefill.contact", "9738582200")
+                jsonObject.put("prefill.email", "vinod568312@gmail.com")
+
+                checkout.open(this.activity, jsonObject)
+            } catch (e: Exception) {
+
+            }
 
         }
     }
@@ -235,7 +274,7 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         v = view
-
+        onPaymentDoneInterface = this
         PreferenceHelper.getSharedPreferences(view.context)
         navController = Navigation.findNavController(view)
         selectedRoom = placesViewModel.getTheSelectedRoom()
@@ -330,6 +369,38 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
         private const val KEY_CAMERA_POSITION = "camera_position"
         private const val DEFAULT_ZOOM = 10
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        lateinit var onPaymentDoneInterface: OnPaymentInterface
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onPaymentDone(transactionId: String) {
+        try {
+            val sdf = SimpleDateFormat("dd-M-yyyy hh:mm:ss")
+
+            val bookPlaceModel =
+                BookPlaceModel(
+                    System.currentTimeMillis().toString(),
+                    selectedRoom.id,
+                    PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_GOOGLE_ID),
+                    PreferenceHelper.readStringFromPreference(LocalKeys.CHECK_IN_TIME)
+                        .split(" ")[0],
+                    PreferenceHelper.readStringFromPreference(LocalKeys.CHECK_OUT_TIME)
+                        .split(" ")[0],
+                    PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS).toString(),
+                    "Payment Done",
+                    selectedRoom.price!! * PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS),
+                    transactionId,
+                    System.currentTimeMillis().toString()
+                )
+            userViewModel.setMyPresentOrder(bookPlaceModel)
+
+            placesViewModel.bookroom(bookPlaceModel)
+            Handler().postDelayed({
+                userViewModel.setMyPresentOrder(bookPlaceModel)
+                navController.navigate(R.id.action_placeDetailsFragment_to_invoiceFragment)
+            }, 1000)
+        } catch (e: Exception) {
+            Log.d("TAG", "onPaymentDone: ${e}")
+        }
+    }
 }

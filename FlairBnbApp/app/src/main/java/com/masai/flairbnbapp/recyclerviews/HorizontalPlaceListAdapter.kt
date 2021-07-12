@@ -71,13 +71,19 @@ class HorizontalPlaceListViewHolder(itemView: View) : RecyclerView.ViewHolder(it
         tvSubTitle_hr.text = roomModel.description.toString()
         tvPriceForWhat_hr.text = " / " + roomModel.priceForWhat.toString()
         val price: String = if (roomModel.price!! > 999) {
-            (roomModel.price!! / 1000).toInt().toString() + "," + (roomModel.price!! % 1000)
+            val x = (roomModel.price!!.toString().reversed().substring(0, 3) + ",").reversed()
+            val y = roomModel.price!!.toString().reversed().substring(3).reversed()
+            y + x
         } else
             roomModel.price.toString()
         tvPrice_hr.text = "₹$price"
 
         //wishlistcode comes here
         //-- - - - - - - - - - -
+        addToWishList_hr.setOnClickListener {
+            addToWishList_hr.setImageResource(R.drawable.ic_noun_heart_red)
+            horizontalPlaceListListenerInterface.onAddedToWishlist(roomModel)
+        }
 
         item_card.setOnClickListener {
             horizontalPlaceListListenerInterface.onHrItemClick(roomModel, adapterPosition)

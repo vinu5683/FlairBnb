@@ -87,7 +87,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     testImplementation 'junit:junit:4.+'
 
-
     //dagger hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
@@ -147,4 +146,9 @@ dependencies {
     implementation 'com.todkars:shimmer-recyclerview:0.4.1'
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'com.google.android.material:material:1.1.0-rc01'
+
+
+    //checkout razorpay
+    implementation 'com.razorpay:checkout:1.6.6'
+
 }
