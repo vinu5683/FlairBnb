@@ -89,6 +89,8 @@
             android:id="@+id/addToWishList_hr"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="5dp"
             android:src="@drawable/ic_noun_heart_normal" />
 

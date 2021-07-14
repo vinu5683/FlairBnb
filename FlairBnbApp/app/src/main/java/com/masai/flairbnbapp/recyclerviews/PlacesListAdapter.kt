@@ -65,10 +65,8 @@ class PlacesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun setData(model: RoomModel, placesListInterface: PlacesListInterface) {
         if (model.images == null) {
-            Log.d("TAG", "setData: No Images for model \n" + model.toString())
             return
         }
-
         val myAdapter = ImageLoopAdapter(model.images)
         carouselViewItem.setSliderAdapter(myAdapter)
 
@@ -76,19 +74,28 @@ class PlacesListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         place_name.text = model.title.toString()
         shortdiscription.text = model.description.toString()
         val total = placesListInterface.getTotal(model.price.toString());
+
         val price: String = if (model.price!! > 999) {
-            (model.price!! / 1000).toInt().toString() + "," + (model.price!! % 1000)
+            val x = (model.price!!.toString().reversed().substring(0, 3) + ",").reversed()
+            val y = model.price!!.toString().reversed().substring(3).reversed()
+            y + x
         } else
             model.price.toString()
+        placeItemContainer.setOnClickListener {
+            placesListInterface.onItemClick(model, adapterPosition)
+        }
+        if (total == 0) {
+            place_price.text = "₹${price}"
+            priceforwhat.text = model.priceForWhat.toString()
+            Log.d("TAG", "setData: from wishlist $model ")
+            return
+        }
         totalPrice.text =
             "Total ₹$total (${PreferenceHelper.readIntFromPreference(LocalKeys.NUMBER_OF_DAYS)} days)"
         totalPrice.paintFlags = totalPrice.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         place_price.text = "₹${price}"
         priceforwhat.text = model.priceForWhat.toString()
         placesListInterface.setMarkOnMap(model, adapterPosition)
-        placeItemContainer.setOnClickListener {
-            placesListInterface.onItemClick(model, adapterPosition)
-        }
     }
 
 

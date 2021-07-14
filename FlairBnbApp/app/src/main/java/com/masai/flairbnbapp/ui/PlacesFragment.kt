@@ -53,6 +53,7 @@ import com.masai.flairbnbapp.localdatabases.PreferenceHelper
 import com.masai.flairbnbapp.models.RoomModel
 import com.masai.flairbnbapp.recyclerviews.*
 import com.masai.flairbnbapp.viewmodels.PlacesViewModel
+import com.masai.flairbnbapp.viewmodels.WishlistViewModel
 import com.todkars.shimmer.ShimmerRecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_places.*
@@ -70,6 +71,7 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
     GoogleMap.OnMarkerClickListener, HorizontalPlaceListListenerInterface, SearchListInterface {
 
     val placesViewModel by viewModels<PlacesViewModel>()
+    val wishlistViewModel by viewModels<WishlistViewModel>()
     lateinit var sheetBehavior: BottomSheetBehavior<View>
     lateinit var searchListView: ListView
 
@@ -638,6 +640,15 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         showDateTimeRangePicker()
     }
 
+    override fun onAddedToWishlist(roomModel: RoomModel) {
+        wishlistViewModel.addToWishList(
+            PreferenceHelper.readStringFromPreference(
+                LocalKeys.KEY_USER_GOOGLE_ID
+            ), roomModel.id
+        )
+        Log.d("TAG", "onAddedToWishlist: ${roomModel.id}")
+    }
+
     @ExperimentalTime
     override fun getTotal(price: String): Int {
         return setTheCheckinCheckoutTime(price)
@@ -654,7 +665,9 @@ class PlacesFragment : Fragment(), OnMapReadyCallback, PlacesListInterface,
         val textView = inflatedView.findViewById<TextView>(R.id.roomPrice)
 
         val price: String = if (roomModel.price!! > 999) {
-            (roomModel.price!! / 1000).toInt().toString() + "," + (roomModel.price!! % 1000)
+            val x = (roomModel.price!!.toString().reversed().substring(0, 3) + ",").reversed()
+            val y = roomModel.price!!.toString().reversed().substring(3).reversed()
+            y + x
         } else
             roomModel.price.toString()
         textView.text = "₹$price"

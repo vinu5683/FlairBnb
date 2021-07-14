@@ -104,7 +104,6 @@
         android:paddingStart="10dp"
         android:paddingTop="2dp"
         android:paddingEnd="10dp"
-        android:text="1200 Total"
         android:textColor="#646464"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/carouselViewItem1"
