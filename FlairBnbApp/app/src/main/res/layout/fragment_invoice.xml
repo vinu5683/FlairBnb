@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/rectangle_bg_box_filled">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".InvoiceFragment">
+        tools:context=".ui.InvoiceFragment">
+
 
         <TextView
             android:id="@+id/topLogoCaption"
@@ -125,7 +127,6 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="Guest"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -150,7 +151,6 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="Guest"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -175,7 +175,6 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="Guest"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -200,7 +199,6 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="Guest"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -225,7 +223,6 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="4"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
@@ -345,7 +342,7 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="1750"
+                    android:text="0"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -395,7 +392,7 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="3500"
+                    android:text="0"
                     android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
@@ -419,7 +416,7 @@
                     android:layout_weight="1"
                     android:gravity="end|center"
                     android:padding="10dp"
-                    android:text="ax_asnxaopckvnviuekd"
+                    android:text=""
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -433,5 +430,6 @@
                 android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_noun_heart_red" />
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

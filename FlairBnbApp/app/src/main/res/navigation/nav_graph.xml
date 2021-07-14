@@ -193,6 +193,6 @@
     </fragment>
     <fragment
         android:id="@+id/invoiceFragment"
-        android:name="com.masai.flairbnbapp.InvoiceFragment"
+        android:name="com.masai.flairbnbapp.ui.InvoiceFragment"
         android:label="InvoiceFragment" />
 </navigation>

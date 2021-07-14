@@ -19,9 +19,18 @@ class PlacesViewModel @Inject public constructor(
     var listOfPlaces = MutableLiveData<ArrayList<RoomModel>>()
     var currentPlaceUser = MutableLiveData<UserModel>()
     var presentBillPlace = MutableLiveData<RoomModel>()
+    var presentBookPlaceModel: MutableLiveData<BookPlaceModel> = MutableLiveData()
 
     fun getTheSelectedRoom(): RoomModel {
         return repository.selectedRoom
+    }
+
+    fun getInvoiceById(uid: String, invoiceId: String): MutableLiveData<BookPlaceModel> {
+        repository.getInvoiceById(uid, invoiceId);
+        viewModelScope.launch {
+            presentBookPlaceModel = repository.presentBookPlaceModel
+        }
+        return presentBookPlaceModel
     }
 
     fun getListOfPlaces(
@@ -61,6 +70,7 @@ class PlacesViewModel @Inject public constructor(
     }
 
     fun bookroom(bookPlaceModel: BookPlaceModel) {
+        presentBookPlaceModel.value = bookPlaceModel
         repository.bookRoom(bookPlaceModel)
     }
 

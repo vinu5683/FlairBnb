@@ -1,4 +1,4 @@
-package com.masai.flairbnbapp
+package com.masai.flairbnbapp.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.masai.flairbnbapp.R
+import com.masai.flairbnbapp.localdatabases.LocalKeys
 import com.masai.flairbnbapp.localdatabases.PreferenceHelper
 import com.masai.flairbnbapp.models.BookPlaceModel
 import com.masai.flairbnbapp.viewmodels.PlacesViewModel
@@ -43,14 +45,22 @@ class InvoiceFragment : Fragment() {
         navController = Navigation.findNavController(view)
         v = view
 
-        if (userViewModel.getMyPresentOrder() != null) {
-            selectedOrder = userViewModel.getMyPresentOrder()!!
-            initViews(view)
-            setData(view)
-
-        } else {
-            Toast.makeText(view.context, "Something went Wrong", Toast.LENGTH_SHORT).show()
+        if (myPresentId != null) {
+            placesViewModel.getInvoiceById(
+                PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_GOOGLE_ID),
+                myPresentId!!
+            ).observe(viewLifecycleOwner, {
+                if (it == null) {
+                    Toast.makeText(view.context, "This invoice not exist", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    selectedOrder = it
+                    initViews(view)
+                    setData(view)
+                }
+            })
         }
+
     }
 
     //btn
@@ -110,6 +120,10 @@ class InvoiceFragment : Fragment() {
         paymentDate.text = sdf.format(Date(selectedOrder.transactionDate?.toLong()!!)).toString()
         tvTotalPrice_invoice.text = selectedOrder.amount.toString()
         tvTransactionId.text = selectedOrder.transactionId
+    }
+
+    companion object {
+        var myPresentId: String? = null
     }
 
 

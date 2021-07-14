@@ -393,10 +393,11 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
                     System.currentTimeMillis().toString()
                 )
             userViewModel.setMyPresentOrder(bookPlaceModel)
-
+            InvoiceFragment.myPresentId = bookPlaceModel.id
             placesViewModel.bookroom(bookPlaceModel)
             Handler().postDelayed({
                 userViewModel.setMyPresentOrder(bookPlaceModel)
+                InvoiceFragment.myPresentId = bookPlaceModel.id
                 navController.navigate(R.id.action_placeDetailsFragment_to_invoiceFragment)
             }, 1000)
         } catch (e: Exception) {

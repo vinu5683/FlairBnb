@@ -20,6 +20,7 @@ import kotlin.collections.HashSet
 
 class FlairRepository {
 
+    val presentBookPlaceModel: MutableLiveData<BookPlaceModel> = MutableLiveData()
     val bookPlaceModels: MutableLiveData<ArrayList<BookPlaceModel>> = MutableLiveData()
     val listOfMyWishListPlaces: MutableLiveData<ArrayList<RoomModel>> =
         MutableLiveData<ArrayList<RoomModel>>()
@@ -456,6 +457,23 @@ class FlairRepository {
 
                 override fun onCancelled(error: DatabaseError) {
 
+                }
+
+            })
+    }
+
+    fun getInvoiceById(uid: String, invoiceId: String) {
+
+        dbRootReference.getReference("orders").child(uid).child(invoiceId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val x = snapshot.getValue(BookPlaceModel::class.java)
+                        presentBookPlaceModel.value = x
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
                 }
 
             })
