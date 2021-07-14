@@ -1,11 +1,15 @@
 package com.masai.flairbnbapp.ui
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -13,9 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.masai.flairbnbapp.R
 import com.masai.flairbnbapp.databinding.ActivityMainBinding
 import com.masai.flairbnbapp.interfaces.NavigationToggleComponent
-import com.masai.flairbnbapp.localdatabases.LocalKeys
-import com.masai.flairbnbapp.localdatabases.PreferenceHelper
-import com.masai.flairbnbapp.models.BookPlaceModel
 import com.razorpay.PaymentResultListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,7 +29,28 @@ class MainActivity : AppCompatActivity(), NavigationToggleComponent,
 
     companion object {
         lateinit var navToggleInterface: NavigationToggleComponent
+        private val REQUEST_EXTERNAL_STORAGE = 1
+        private val PERMISSIONS_STORAGE = arrayOf<String>(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        fun verifyStoragePermissions(activity: Activity?) {
+            // Check if we have write permission
+            val permission = ActivityCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+                )
+            }
+        }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +59,7 @@ class MainActivity : AppCompatActivity(), NavigationToggleComponent,
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.setStatusBarColor(this.resources.getColor(R.color.black))
-
+        verifyStoragePermissions(this)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         nav_view.visibility = View.GONE
     }

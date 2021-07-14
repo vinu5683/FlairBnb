@@ -2,9 +2,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rectangle_bg_box_filled">
+    android:background="@drawable/rectangle_bg_box_filled"
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,30 +15,14 @@
         android:layout_height="wrap_content"
         tools:context=".ui.InvoiceFragment">
 
-
-        <TextView
-            android:id="@+id/topLogoCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:gravity="center"
-            android:text="FlairBnb"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_noun_airbnb_colored_40"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
             android:id="@+id/receiptLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/topLogoCaption">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tvEmailReceipt"
@@ -66,6 +53,23 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/topLogoCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="FlairBnb"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_noun_airbnb_colored_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/receiptLL" />
+
+
+
         <LinearLayout
             android:id="@+id/customerReceiptLL"
             android:layout_width="match_parent"
@@ -73,7 +77,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/receiptLL">
+            app:layout_constraintTop_toBottomOf="@id/topLogoCaption">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -395,6 +399,7 @@
                     android:text="0"
                     android:textSize="18sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -430,6 +435,5 @@
                 android:textSize="18sp"
                 app:drawableStartCompat="@drawable/ic_noun_heart_red" />
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

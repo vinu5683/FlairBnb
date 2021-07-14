@@ -151,4 +151,9 @@ dependencies {
     //checkout razorpay
     implementation 'com.razorpay:checkout:1.6.6'
 
+    //to print recipt as pdf
+    implementation 'com.itextpdf:itextg:5.5.10'
+
+
+
 }

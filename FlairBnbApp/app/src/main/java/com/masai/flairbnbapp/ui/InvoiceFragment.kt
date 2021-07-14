@@ -1,15 +1,27 @@
 package com.masai.flairbnbapp.ui
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Environment
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.itextpdf.text.Document
+import com.itextpdf.text.Image
+import com.itextpdf.text.pdf.PdfWriter
 import com.masai.flairbnbapp.R
 import com.masai.flairbnbapp.localdatabases.LocalKeys
 import com.masai.flairbnbapp.localdatabases.PreferenceHelper
@@ -17,8 +29,12 @@ import com.masai.flairbnbapp.models.BookPlaceModel
 import com.masai.flairbnbapp.viewmodels.PlacesViewModel
 import com.masai.flairbnbapp.viewmodels.UsersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_invoice.*
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 @AndroidEntryPoint
 class InvoiceFragment : Fragment() {
@@ -66,7 +82,7 @@ class InvoiceFragment : Fragment() {
     //btn
     lateinit var tvEmailReceipt: TextView
     lateinit var tvPrintReceipt: TextView
-
+    lateinit var receiptLL: LinearLayout
     lateinit var receiptDate: TextView
     lateinit var tvGuestName_invoice: TextView
     lateinit var tvPlaceName_invoice: TextView
@@ -96,6 +112,17 @@ class InvoiceFragment : Fragment() {
             tvPricePerNight_invoice = findViewById(R.id.tvPricePerNight_invoice)
             tvTotalPrice_invoice = findViewById(R.id.tvTotalPrice_invoice)
             tvTransactionId = findViewById(R.id.tvTransactionId)
+            receiptLL = findViewById(R.id.receiptLL)
+
+            tvPrintReceipt.setOnClickListener {
+                receiptLL.visibility = View.GONE
+                takeScreenShot()
+                receiptLL.visibility = View.VISIBLE
+            }
+            tvEmailReceipt.setOnClickListener {
+                Toast.makeText(v.context, "We are adding this feature soon", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 
@@ -126,5 +153,98 @@ class InvoiceFragment : Fragment() {
         var myPresentId: String? = null
     }
 
+    var b: Bitmap? = null
+    var path: String = ""
+    private fun takeScreenShot() {
+        val folder = File(Environment.getExternalStorageDirectory().absolutePath + "/Signature/")
+        if (!folder.exists()) {
+            val success: Boolean = folder.mkdir()
+        }
+        path = folder.absolutePath
+        path += "/signature_pdf_${System.currentTimeMillis()}.pdf"
+        Log.d("TAG", "takeScreenShot: $path")
+        val u: View = v.findViewById(R.id.scroll)
+        val z = v.findViewById(R.id.scroll) as ScrollView // parent view
+        val totalHeight = z.getChildAt(0).height // parent view height
+        val totalWidth = z.getChildAt(0).width // parent view width
 
+        //Save bitmap to  below path
+        val extr = Environment.getExternalStorageDirectory().toString() + "/Signature/"
+        val file = File(extr)
+        if (!file.exists())
+            file.mkdir()
+        val fileName: String = "signature_img_" + ".jpg"
+        val myPath = File(extr, fileName)
+        val imagesUri = myPath.path
+        Log.d("TAG", "takeScreenShot: $imagesUri")
+        var fos: FileOutputStream? = null
+
+        b = getBitmapFromView(u, totalHeight, totalWidth)
+//        Glide.with(v.context).load(b).into(someimage)
+        try {
+            fos = FileOutputStream(myPath)
+            b?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.flush()
+            fos.close()
+        } catch (e: Exception) {
+            Log.d("TAG", "takeScreenShot: $e")
+            e.printStackTrace()
+        }
+        createPdf() // create pdf after creating bitmap and saving
+    }
+
+    fun getBitmapFromView(view: View, totalHeight: Int, totalWidth: Int): Bitmap? {
+        val bitmap =
+            Bitmap.createBitmap(totalWidth, totalHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun createPdf() {
+        val document = Document()
+
+        val directoryPath = Environment.getExternalStorageDirectory().toString()
+        val extr = Environment.getExternalStorageDirectory().toString() + "/Signature/"
+        path = "${extr}signature_img_.jpg"
+        PdfWriter.getInstance(
+            document,
+            FileOutputStream("$directoryPath/Signature/bill.pdf")
+        ) //  Change pdf's name.
+
+
+        document.open()
+
+        val image: Image =
+            Image.getInstance(path) // Change image's name and extension.
+
+
+        val scaler: Float = 34f  // 0 means you have no indentation. If you have any, change it.
+
+        image.scalePercent(scaler)
+        image.setAlignment(Image.ALIGN_CENTER or Image.ALIGN_TOP)
+
+        document.add(image)
+        document.close()
+        Handler().postDelayed({
+            openPdf(path)
+        }, 1000)
+    }
+
+    fun openPdf(path: String) {
+        val directoryPath = Environment.getExternalStorageDirectory().toString()
+        val selectedUri = Uri.parse("$directoryPath/Signature/");
+        val intent = Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(selectedUri, "resource/folder");
+
+        if (intent.resolveActivityInfo(activity?.packageManager!!, 0) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(
+                v.context,
+                "something went wrong while opening activity",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 }
