@@ -104,7 +104,7 @@ class HostPart1Fragment : Fragment(), OnMapReadyCallback {
             locationPermissionGranted = true
         } else {
             ActivityCompat.requestPermissions(
-                activity?.parent!!, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
             )
         }
