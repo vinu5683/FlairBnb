@@ -34,20 +34,20 @@
   </p>
   
   <h2>Screenshots</h2>
-  <p align="center">
-    <img src="screenshots/flairbnb1.jpg" width="430" title="home pages">
-    <img src="screenshots/flairbnb2.jpg" width="400" title="home page and profile">
+  <p >
+    <img src="screenshots/flairbnb1.jpg" width="480" height="650" title="home pages">
+    <img src="screenshots/flairbnb2.jpg" width="450" height="650" title="home page and profile">
   </p>
-  <p align="center">
-    <img src="screenshots/flairbnb3.jpg" width="400" height="500" title="near by places with map">
-    <img src="screenshots/flairbnb4.jpg" width="400" height="500" title="detailed information about the accommodation">
+  <p>
+    <img src="screenshots/flairbnb3.jpg" width="450" height="600" title="near by places with map">
+    <img src="screenshots/flairbnb4.jpg" width="450" height="600" title="detailed information about the accommodation">
   </p>
-  <p align="center">
-    <img src="screenshots/flairbnb5.jpg" width="400" height="500" title="Available Services">
-    <img src="screenshots/flairbnb6.jpg" width="400" height="500" title="Payment gateway">
+  <p>
+    <img src="screenshots/flairbnb5.jpg" width="450" height="500" title="Available Services">
+    <img src="screenshots/flairbnb6.jpg" width="450" height="500" title="Payment gateway">
   </p>
-  <p align="center">
-    <img src="screenshots/flairbnb7.jpg" width="400" height="500" title="Bill we can print the pdf">
+  <p>
+    <img src="screenshots/flairbnb7.jpg" width="450" height="500" title="Bill we can print the pdf">
   </p>
   
   <H3> You can install app or watch the video of completly working app using link below<h3>
