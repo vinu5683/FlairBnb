@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.InboxFragment"/>
+    tools:context=".ui.InboxFragment">
+
+    <TextView
+        android:id="@+id/tripsCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Trips"
+        android:textColor="@color/graytextblack"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvMessages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:foreground="@drawable/ripple_effect"
+        android:padding="10dp"
+        android:text="Messages"
+        android:textColor="@color/graytextblack"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tripsCaption" />
+
+    <TextView
+        android:id="@+id/tvNotifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:foreground="@drawable/ripple_effect"
+        android:padding="10dp"
+        android:text="Notifications"
+        android:textColor="#3E3D3D"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/tvMessages"
+        app:layout_constraintTop_toBottomOf="@id/tripsCaption" />
+
+    <View
+        android:id="@+id/view_bar_trips"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="#c4c4c4"
+        app:layout_constraintTop_toBottomOf="@+id/tvMessages" />
+
+    <TextView
+        android:id="@+id/captionNoMsgs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:text="You have no unread messages"
+        android:textColor="@color/graytextblack"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_bar_trips" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Plan a new trip and explore new places \nto stay close to all the places you love."
+        android:textColor="#454545"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/captionNoMsgs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

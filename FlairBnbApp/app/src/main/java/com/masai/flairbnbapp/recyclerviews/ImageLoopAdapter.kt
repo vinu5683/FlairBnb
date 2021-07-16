@@ -13,6 +13,7 @@ class ImageLoopAdapter(val list: ArrayList<String>) :
 
     class MyViewHolder(itemView: View?) : SliderViewAdapter.ViewHolder(itemView) {
         fun setData(s: String) {
+
             Glide.with(itemView.context).load(s).into(iv!!)
         }
 
@@ -33,6 +34,8 @@ class ImageLoopAdapter(val list: ArrayList<String>) :
     }
 
     override fun onBindViewHolder(viewHolder: MyViewHolder?, position: Int) {
+        if (list[position] == null)
+            return
         viewHolder?.setData(list[position])
     }
 }

@@ -17,4 +17,5 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAXSXX1QZFl01A30-t-ZLiTapeEhkduXmw</string>
     <string name="_4500">4500</string>
     <string name="get_the_latest_on_our_covid_19_response"><u>Get the latest on our COVID-19 response</u></string>
+    <string name="show_profile"><u>Show profile</u></string>
 </resources>

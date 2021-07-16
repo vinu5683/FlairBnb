@@ -48,7 +48,7 @@ class WishlistsFragment : Fragment(), PlacesListInterface {
     private var list = ArrayList<RoomModel>()
     lateinit var navController: NavController
     private var adapter = PlacesListAdapter(list, this)
-    lateinit var rvWishList: RecyclerView
+    lateinit var rvWishList: ShimmerRecyclerView
     lateinit var v: View
 
     override fun onCreateView(
@@ -67,6 +67,7 @@ class WishlistsFragment : Fragment(), PlacesListInterface {
         navController = Navigation.findNavController(view)
         initViews(view)
         setRecyclerview(view)
+        setShimmerViewType()
         wishListViewModel.getMyWishListData(PreferenceHelper.readStringFromPreference(LocalKeys.KEY_USER_GOOGLE_ID))
             .observe(viewLifecycleOwner, {
                 if (it != null) {
@@ -74,9 +75,34 @@ class WishlistsFragment : Fragment(), PlacesListInterface {
                     list = it
                     adapter = PlacesListAdapter(list, this)
                     rvWishList.adapter = adapter
+                    rvWishList.hideShimmer()
                     adapter.notifyDataSetChanged()
                 }
             })
+
+    }
+
+    //todo: For Shimmer Effect
+    fun setShimmerViewType() {
+        rvWishList.setItemViewType { layoutManagerType, position ->
+            when (layoutManagerType) {
+                ShimmerRecyclerView.LAYOUT_GRID -> {
+                    if (position % 2 == 0) {
+                        return@setItemViewType R.layout.demo_shimmer_grid
+                    } else
+                        return@setItemViewType R.layout.demo_shimmer_grid
+                }
+                ShimmerRecyclerView.LAYOUT_LIST -> {
+                    if (position == 0 && position % 2 == 0) {
+                        return@setItemViewType R.layout.demo_shimmer_grid
+                    } else
+                        return@setItemViewType R.layout.demo_shimmer_grid
+                }
+                else -> return@setItemViewType R.layout.demo_shimmer_grid
+
+            }
+        }
+        rvWishList.showShimmer()
 
     }
 
