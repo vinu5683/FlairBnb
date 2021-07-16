@@ -159,8 +159,6 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
         val checkin = checkinTime.split(" ")
         val checkout = checkoutTime.split(" ")
 
-
-
         if (checkinTime != null && checkoutTime != null &&
             checkin.size == 4 && checkout.size == 4
         ) {
@@ -172,6 +170,7 @@ class PlaceDetailsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerC
                         LocalKeys.NUMBER_OF_DAYS
                     )
                 } days)"
+            tvAvailability.text = tvFromToDate.text
         }
     }
 

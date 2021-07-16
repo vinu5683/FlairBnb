@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
-    val SPLASH_LENGTH: Long = 3000
+    val SPLASH_LENGTH: Long = 5000
     private lateinit var navController: NavController
     lateinit var mAuth: FirebaseAuth
 
